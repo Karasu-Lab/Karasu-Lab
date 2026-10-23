@@ -4,7 +4,7 @@ packages:
 
 overrides:
   jwks-rsa>jose: '^5.10.0'
-  zod@^4: 4.4.3
+  zod@^4: 4.5.4
   jose@^6: 6.2.5
 
 allowBuilds:

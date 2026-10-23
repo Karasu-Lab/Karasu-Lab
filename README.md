@@ -7,7 +7,13 @@ This is my website workdirectory managed by pnpm.
 ### Install dependencies
 
 ```
-pnpm install/i
+pnpm install
+```
+
+or
+
+```
+pnpm i
 ```
 
 ### Build

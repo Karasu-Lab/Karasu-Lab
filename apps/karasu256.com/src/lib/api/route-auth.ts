@@ -38,7 +38,7 @@ async function validateApiKey(token: string): Promise<{ userId: string; permissi
  */
 async function validateOauthToken(token: string): Promise<{ userId: string; scopes: string[] } | null> {
   try {
-    const payload = await resourceClient.getActions().verifyAccessToken(token, {
+    const payload = await resourceClient.getActions().verifyBearerToken(token, {
       verifyOptions: { audience: OAUTH_ISSUER, issuer: OAUTH_ISSUER },
       jwksUrl: `${OAUTH_ISSUER}/jwks`,
     });

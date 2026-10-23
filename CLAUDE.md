@@ -12,6 +12,7 @@ Run these from the repository root, not from inside an app directory:
 
 ```bash
 pnpm dev            # Start all apps' dev servers via turbo
+pnpm dev:auth       # Start only what the Android app's auth needs: the db, db-migrate, neon-auth and firebase containers, the api-auth and api workers, and the cloudflared tunnel
 pnpm build          # Build all apps via turbo
 pnpm lint           # Lint all apps via turbo
 pnpm format         # Format the whole repo with Prettier
@@ -71,8 +72,9 @@ If a command's output needs to be told apart from another's, run them as separat
 ### Apps (`apps/*`)
 
 - **karasu256.com** — the main marketing/landing Next.js site. The home page is intentionally empty, plus `/settings/profile`, `/settings/developer`, `/settings/other`, an OAuth test-callback route, and API routes for permissions, user, profile, and API keys.
-- **auth.karasu256.com** — the authentication and authorization server: the monorepo's single better-auth instance (sessions, email/password, Google/GitHub sign-in, passkey sign-in, API key verification) and the OAuth 2.1/OIDC authorization server for the other apps, plus the sign-in, consent, password-reset, and sign-out pages. Validates every multi-stage callback's return URL against its trusted origins. Has no database of its own: it connects to the same database as accounts.karasu256.com.
-- **accounts.karasu256.com** — the account portal (`/settings`): profile, linked providers, passkey and password management, API keys, OAuth clients, and multi-account switching, calling auth.karasu256.com for everything authentication-related. Owns the Drizzle migration files and `drizzle-kit` config/scripts (`db:generate`, `db:migrate:dev`, `db:migrate:prod`) for the schema defined in `packages/db`.
+- **auth.karasu256.com** — the sign-in, consent, password-reset, and sign-out pages. It holds only a better-auth client (`authClient`) and UI, calling api-auth.karasu256.com (`NEXT_PUBLIC_AUTH_API_URL`) for everything authentication-related. Validates every multi-stage callback's return URL against its trusted origins. Has no database of its own.
+- **api-auth.karasu256.com** — an Elysia app on Cloudflare Workers hosting the monorepo's single better-auth instance (sessions, email/password, Google/GitHub sign-in, passkey sign-in, API key verification) and the OAuth 2.1/OIDC authorization server for the other apps, plus the signed internal API key route. Builds the better-auth instance and its database connection per request, and syncs users to Firebase Auth and Neon Auth through their REST APIs in the user lifecycle hooks. It connects to the same database as accounts.karasu256.com.
+- **accounts.karasu256.com** — the account portal (`/settings`): profile, linked providers, passkey and password management, API keys, OAuth clients, and multi-account switching, calling api-auth.karasu256.com for everything authentication-related. Owns the Drizzle migration files and `drizzle-kit` config/scripts (`db:generate`, `db:migrate:dev`, `db:migrate:prod`) for the schema defined in `packages/db`.
 - **cdn.karasu256.com** — an Elysia app on Cloudflare Workers that serves as the image/file CDN: public routes serve images by path, protected/anonymous routes handle upload and delete, backed by CORS, rate-limiting, and auth middleware.
 - **qr.karasu256.com** — a Next.js app that generates and displays a per-user (or anonymous) QR code linking to their profile/content, uploading the generated image through the CDN and caching the result in Redis.
 - **cron-jobs** — a Cloudflare Worker (`wrangler`) scaffold for scheduled jobs, depending on `@Hashibutogarasu/db` for future DB-backed tasks.

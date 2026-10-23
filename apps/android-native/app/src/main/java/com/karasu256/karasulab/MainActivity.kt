@@ -27,7 +27,7 @@ import com.karasu256.karasulab.ui.theme.AppTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.HomeScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.SignInScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.AuthScreenDestination
 import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -76,13 +76,13 @@ private fun LaunchFlow(viewModel: MainViewModel) {
 private fun AppContent(viewModel: MainViewModel) {
     val isSignedIn by viewModel.isSignedIn.collectAsStateWithLifecycle()
     val signedInAtLaunch = isSignedIn ?: return
-    val start = remember { if (signedInAtLaunch) HomeScreenDestination else SignInScreenDestination }
+    val start = remember { if (signedInAtLaunch) HomeScreenDestination else AuthScreenDestination }
     val navController = rememberNavController()
     val navigator = navController.rememberDestinationsNavigator()
 
     LaunchedEffect(isSignedIn) {
         if (isSignedIn == false && navController.currentDestination?.route == HomeScreenDestination.route) {
-            navigator.navigate(SignInScreenDestination) {
+            navigator.navigate(AuthScreenDestination) {
                 popUpTo(NavGraphs.root) { inclusive = true }
             }
         }

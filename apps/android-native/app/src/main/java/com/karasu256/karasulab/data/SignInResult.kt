@@ -5,7 +5,7 @@ sealed interface SignInResult {
     /** The user is signed in, with the token stored and the profile cached. */
     data object Success : SignInResult
 
-    /** auth.karasu256.com rejected the credentials. */
+    /** api-auth.karasu256.com rejected the credentials. */
     data object InvalidCredentials : SignInResult
 
     /** A server could not be reached. */
@@ -16,7 +16,7 @@ sealed interface SignInResult {
 }
 
 /**
- * A passkey challenge issued by auth.karasu256.com.
+ * A passkey challenge issued by api-auth.karasu256.com.
  *
  * @property optionsJson WebAuthn request options to hand to Credential Manager.
  * @property cookieHeader `Cookie` header value carrying the challenge, to send back with the assertion.

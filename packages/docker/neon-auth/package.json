@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "better-auth": "1.6.23",
+    "better-auth": "1.7.12",
     "pg": "8.23.1"
   }
 }

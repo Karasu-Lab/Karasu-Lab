@@ -4,11 +4,15 @@ import android.app.Activity
 import android.util.Log
 import androidx.credentials.Credential
 import androidx.credentials.CredentialManager
+import androidx.credentials.CreatePublicKeyCredentialRequest
+import androidx.credentials.CreatePublicKeyCredentialResponse
 import androidx.credentials.CredentialOption
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetPublicKeyCredentialOption
 import androidx.credentials.PublicKeyCredential
+import androidx.credentials.exceptions.CreateCredentialCancellationException
+import androidx.credentials.exceptions.CreateCredentialException
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.GetCredentialException
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
@@ -35,6 +39,18 @@ class CredentialAuthenticator(private val activity: Activity) : CredentialProvid
         val credential = request(GetPublicKeyCredentialOption(requestJson)) ?: return null
         check(credential is PublicKeyCredential) { "Unexpected credential type: ${credential.type}" }
         return credential.authenticationResponseJson
+    }
+
+    override suspend fun createPasskey(requestJson: String): String? = try {
+        val response = credentialManager.createCredential(activity, CreatePublicKeyCredentialRequest(requestJson))
+        check(response is CreatePublicKeyCredentialResponse) { "Unexpected credential response: ${response.type}" }
+        response.registrationResponseJson
+    } catch (e: CreateCredentialCancellationException) {
+        Log.w(TAG, e.type, e)
+        null
+    } catch (e: CreateCredentialException) {
+        Log.e(TAG, e.type, e)
+        throw e
     }
 
     /**

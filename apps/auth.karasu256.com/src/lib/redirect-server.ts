@@ -24,7 +24,7 @@ export function getContinueTo(searchParams: SearchParams): string {
       const v = first(value);
       if (v !== undefined && !OAUTH_SIGNATURE_PARAMS.includes(key)) params.set(key, v);
     }
-    return `/api/auth/oauth2/authorize?${params.toString()}`;
+    return `${process.env.NEXT_PUBLIC_AUTH_API_URL ?? ''}/api/auth/oauth2/authorize?${params.toString()}`;
   }
   return getRedirectTo(searchParams.redirectTo);
 }

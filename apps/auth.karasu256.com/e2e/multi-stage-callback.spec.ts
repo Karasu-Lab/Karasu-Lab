@@ -1,5 +1,5 @@
 import { test, expect, type APIRequestContext, type CDPSession, type Page } from '@playwright/test';
-import { ACCOUNTS_URL, AUTH_URL, MOCK_OAUTH_URL } from '../playwright.config';
+import { ACCOUNTS_URL, AUTH_API_URL, AUTH_URL, MOCK_OAUTH_URL } from '../playwright.config';
 import {
   configureMockOAuth,
   createPkcePair,
@@ -88,7 +88,7 @@ test.describe('OAuth authorize flow', () => {
 
   async function createClient(request: Parameters<typeof signUp>[0]) {
     await signUp(request, 'oauth-owner');
-    const res = await request.post(`${AUTH_URL}/api/auth/oauth2/create-client`, {
+    const res = await request.post(`${AUTH_API_URL}/api/auth/oauth2/create-client`, {
       headers: { Origin: AUTH_URL },
       data: { client_name: 'e2e client', redirect_uris: [redirectUri], scope: 'openid profile email' },
     });
@@ -106,7 +106,7 @@ test.describe('OAuth authorize flow', () => {
       code_challenge: challenge,
       code_challenge_method: 'S256',
     });
-    return `${AUTH_URL}/api/auth/oauth2/authorize?${params.toString()}`;
+    return `${AUTH_API_URL}/api/auth/oauth2/authorize?${params.toString()}`;
   }
 
   async function finishAtClient(
@@ -126,7 +126,7 @@ test.describe('OAuth authorize flow', () => {
     expect(code).toBeTruthy();
 
     const clientServer = await playwright.request.newContext();
-    const tokenRes = await clientServer.post(`${AUTH_URL}/api/auth/oauth2/token`, {
+    const tokenRes = await clientServer.post(`${AUTH_API_URL}/api/auth/oauth2/token`, {
       form: {
         grant_type: 'authorization_code',
         code: code!,

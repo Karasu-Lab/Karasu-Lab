@@ -10,6 +10,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /** Profile settings page — shows the current user's info. */
 export default async function ProfilePage() {
-  const sessionUser = await getSessionUser(process.env.NEXT_PUBLIC_AUTH_URL);
+  const sessionUser = await getSessionUser(process.env.NEXT_PUBLIC_AUTH_API_URL);
   return <ProfileSection uid={sessionUser!.uid} email={sessionUser!.email} iconUrl={sessionUser!.image} />;
 }

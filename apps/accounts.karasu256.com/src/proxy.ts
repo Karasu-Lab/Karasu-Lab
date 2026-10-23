@@ -3,6 +3,18 @@ import { getSessionCookie } from 'better-auth/cookies';
 import { firebaseConfigSchema } from '@/lib/firebase/schema';
 
 /**
+ * Returns the origin the client used to reach this app. The dev server reports its own
+ * `localhost` origin in `request.url` when requests arrive through a tunnel or reverse proxy,
+ * so the forwarded host and protocol headers take precedence.
+ */
+function getPublicOrigin(request: NextRequest): string {
+  const host = request.headers.get('x-forwarded-host') ?? request.headers.get('host');
+  if (!host) return request.nextUrl.origin;
+  const protocol = request.headers.get('x-forwarded-proto')?.split(',')[0]?.trim() ?? request.nextUrl.protocol.replace(':', '');
+  return `${protocol}://${host}`;
+}
+
+/**
  * Next.js 16 proxy (formerly middleware) that:
  * 1. Validates all required Firebase environment variables on every request.
  * 2. Redirects unauthenticated requests for / and /settings to auth.karasu256.com's sign-in page.
@@ -36,15 +48,16 @@ export function proxy(request: NextRequest): NextResponse {
     });
   }
 
-  const { pathname } = request.nextUrl;
+  const { pathname, search } = request.nextUrl;
   const hasSession = Boolean(getSessionCookie(request));
+  const publicOrigin = getPublicOrigin(request);
 
   if (hasSession && pathname === '/') {
-    return NextResponse.redirect(new URL('/settings', request.url));
+    return NextResponse.redirect(new URL('/settings', publicOrigin));
   }
 
   if (!hasSession && (pathname === '/' || pathname.startsWith('/settings'))) {
-    const target = pathname === '/' ? new URL('/settings', request.url) : request.nextUrl;
+    const target = pathname === '/' ? new URL('/settings', publicOrigin) : new URL(`${pathname}${search}`, publicOrigin);
     const signIn = new URL('/sign-in', process.env.NEXT_PUBLIC_AUTH_URL);
     signIn.searchParams.set('redirectTo', target.toString());
     return NextResponse.redirect(signIn);

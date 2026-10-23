@@ -4,7 +4,7 @@ services:
     container_name: karasu-lab-admin-api
     restart: unless-stopped
     ports:
-      - '8084:3004'
+      - '8084:3006'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./configs/default.yml:/app/configs/default.yml:ro

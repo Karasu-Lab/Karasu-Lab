@@ -7,18 +7,18 @@ import { parseSetCookieHeader, toCookieOptions } from 'better-auth/cookies';
 /**
  * Ends the better-auth session — the session every app trusts for "who is
  * logged in" — by forwarding this request's cookies to
- * auth.karasu256.com's `/api/auth/sign-out` and replaying the resulting
+ * api-auth.karasu256.com's `/api/auth/sign-out` and replaying the resulting
  * `Set-Cookie`s onto the local cookie store. Errors are swallowed: the
  * redirect to the auth app's sign-out page below must still proceed
  * even if the auth app is unreachable.
  */
-async function endBetterAuthSession(authUrl: string, store: Awaited<ReturnType<typeof cookies>>): Promise<void> {
+async function endBetterAuthSession(authApiUrl: string, store: Awaited<ReturnType<typeof cookies>>): Promise<void> {
   try {
     const cookieHeader = store
       .getAll()
       .map((c) => `${c.name}=${c.value}`)
       .join('; ');
-    const res = await fetch(`${authUrl}/api/auth/sign-out`, {
+    const res = await fetch(`${authApiUrl}/api/auth/sign-out`, {
       method: 'POST',
       headers: { cookie: cookieHeader },
     });
@@ -37,9 +37,10 @@ async function endBetterAuthSession(authUrl: string, store: Awaited<ReturnType<t
 export async function signOutAction(): Promise<void> {
   const store = await cookies();
   const authUrl = process.env.NEXT_PUBLIC_AUTH_URL ?? '';
+  const authApiUrl = process.env.NEXT_PUBLIC_AUTH_API_URL ?? '';
 
-  if (authUrl) {
-    await endBetterAuthSession(authUrl, store);
+  if (authApiUrl) {
+    await endBetterAuthSession(authApiUrl, store);
   }
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? '';

@@ -43,7 +43,7 @@ export default async function RootLayout({
 }>) {
   const locale = await getLocale();
   const messages = await getMessages();
-  const sessionUser = await getSessionUser(process.env.NEXT_PUBLIC_AUTH_URL);
+  const sessionUser = await getSessionUser(process.env.NEXT_PUBLIC_AUTH_API_URL);
   const initialUser = sessionUser
     ? { uid: sessionUser.uid, iconUrl: sessionUser.image, displayName: sessionUser.name, email: sessionUser.email }
     : null;
@@ -53,7 +53,7 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground antialiased" style={{ '--sidebar-top': '3rem' } as React.CSSProperties}>
         <NextIntlClientProvider messages={messages}>
           <FeatureFlagsProvider flags={appFlags} schema={appFlagsSchema}>
-            <SessionProvider baseURL={process.env.NEXT_PUBLIC_AUTH_URL} initialUser={initialUser}>
+            <SessionProvider baseURL={process.env.NEXT_PUBLIC_AUTH_API_URL} initialUser={initialUser}>
               <R2StorageProvider imageApiUrl={process.env.CDN_URL!}>
                 <PopUpMenuProvider>
                   <Header />

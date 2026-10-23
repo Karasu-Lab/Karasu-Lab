@@ -1,5 +1,5 @@
 import { test, expect, type APIRequestContext } from '@playwright/test';
-import { ACCOUNTS_URL, AUTH_URL } from '../playwright.config';
+import { ACCOUNTS_URL, AUTH_API_URL, AUTH_URL } from '../playwright.config';
 import { uniqueEmail } from './helpers';
 
 interface SignedAuthRequest {
@@ -27,7 +27,7 @@ function send(request: APIRequestContext, signed: SignedAuthRequest) {
 }
 
 async function apiKeyNames(request: APIRequestContext): Promise<string[]> {
-  const res = await request.get(`${AUTH_URL}/api/auth/api-key/list`);
+  const res = await request.get(`${AUTH_API_URL}/api/auth/api-key/list`);
   expect(res.ok(), await res.text()).toBeTruthy();
   const body = (await res.json()) as { name: string | null }[] | { apiKeys: { name: string | null }[] };
   return (Array.isArray(body) ? body : body.apiKeys).map((key) => key.name ?? '');
@@ -39,7 +39,7 @@ test.describe('signed requests from accounts', () => {
 
   test.beforeEach(async ({ request }) => {
     email = uniqueEmail('signature');
-    const res = await request.post(`${AUTH_URL}/api/auth/sign-up/email`, {
+    const res = await request.post(`${AUTH_API_URL}/api/auth/sign-up/email`, {
       headers: { Origin: AUTH_URL },
       data: { email, password: `pw-${crypto.randomUUID()}`, name: email },
     });

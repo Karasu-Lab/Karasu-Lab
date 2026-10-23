@@ -43,7 +43,7 @@ function getJwks(authUrl: string, protectionBypassSecret: string | undefined): R
   return jwks;
 }
 
-/** Verifies a bearer JWT from auth.karasu256.com, for callers whose server never receives its session cookie. */
+/** Verifies a bearer JWT from api-auth.karasu256.com, for callers whose server never receives its session cookie. */
 export async function verifyAppJwt(token: string, authUrl: string | undefined, protectionBypassSecret?: string): Promise<string | null> {
   if (!authUrl) {
     logError('verify_app_jwt', { result: 'failure', reason: 'missing_auth_url' });

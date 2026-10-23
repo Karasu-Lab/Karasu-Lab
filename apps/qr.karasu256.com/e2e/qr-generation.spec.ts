@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test';
 
 const AUTH_URL = 'http://localhost:3004';
+const AUTH_API_URL = 'http://localhost:8790';
 const CDN_URL = 'http://localhost:8788';
 
 test('generates a QR code for a signed-in user and serves it from the CDN', async ({ page }) => {
   const email = `e2e-qr-${Date.now()}@example.test`;
-  const signUpRes = await page.request.post(`${AUTH_URL}/api/auth/sign-up/email`, {
+  const signUpRes = await page.request.post(`${AUTH_API_URL}/api/auth/sign-up/email`, {
     headers: { Origin: AUTH_URL },
     data: { email, password: `pw-${crypto.randomUUID()}`, name: email },
   });

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { ACCOUNTS_URL } from '../playwright.config';
+import { ACCOUNTS_URL, AUTH_API_URL } from '../playwright.config';
 import { signInPath } from './helpers';
 
 const FIREBASE_AUTH_EMULATOR_URL = 'http://127.0.0.1:9099';
@@ -18,7 +18,7 @@ test('creates an account from the sign-up form', async ({ page }) => {
   await page.getByRole('button', { name: 'アカウント作成', exact: true }).click();
   await page.waitForURL(target);
 
-  const sessionRes = await page.request.get('/api/auth/get-session');
+  const sessionRes = await page.request.get(`${AUTH_API_URL}/api/auth/get-session`);
   expect(sessionRes.ok()).toBeTruthy();
   const session = (await sessionRes.json()) as { user: { id: string; email: string } };
   expect(session.user.email).toBe(email);

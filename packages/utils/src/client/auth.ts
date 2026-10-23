@@ -9,9 +9,8 @@ import { multiSessionClient } from 'better-auth/client/plugins';
 export interface CreateAppAuthClientOptions {
   /**
    * Base URL of the better-auth instance. Required when the caller is on a
-   * different origin than the app hosting better-auth (e.g. karasu256.com
-   * calling auth.karasu256.com). Omit when the caller is the same app
-   * that hosts better-auth.
+   * different origin than the worker hosting better-auth (e.g. karasu256.com
+   * calling api-auth.karasu256.com).
    */
   baseURL?: string;
 }

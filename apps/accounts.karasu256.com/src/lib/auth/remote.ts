@@ -16,7 +16,7 @@ export interface SignedAuthRequestOptions {
 }
 
 export function authUrl(path: string): string {
-  return `${process.env.NEXT_PUBLIC_AUTH_URL ?? ''}${path}`;
+  return `${process.env.NEXT_PUBLIC_AUTH_API_URL ?? ''}${path}`;
 }
 
 export function buildSignedAuthRequest(path: string, options: SignedAuthRequestOptions = {}): SignedAuthRequest {

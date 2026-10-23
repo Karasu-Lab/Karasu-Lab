@@ -7,4 +7,6 @@ interface CredentialProvider {
 
     /** Shows the native passkey picker for [requestJson] and returns the assertion JSON, or null when the user cancels. */
     suspend fun requestPasskeyAssertion(requestJson: String): String?
+
+    suspend fun createPasskey(requestJson: String): String?
 }

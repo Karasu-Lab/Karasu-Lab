@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
  * sign-in page, then renders the shared sidebar shell around the page content.
  */
 export default async function SettingsLayout({ children }: { children: React.ReactNode }) {
-  const sessionUser = await getSessionUser(process.env.NEXT_PUBLIC_AUTH_URL);
+  const sessionUser = await getSessionUser(process.env.NEXT_PUBLIC_AUTH_API_URL);
   if (!sessionUser) {
     redirect(await getSignInUrl(process.env.NEXT_PUBLIC_AUTH_URL, '/settings'));
   }

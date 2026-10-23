@@ -11,9 +11,12 @@ import com.karasu256.karasulab.data.local.SessionStore
 import com.karasu256.karasulab.data.remote.AuthApi
 import com.karasu256.karasulab.data.remote.CustomTokenAuthenticator
 import com.karasu256.karasulab.data.remote.CustomTokenInterceptor
+import com.karasu256.karasulab.data.remote.DebugRemoteHostConfig
 import com.karasu256.karasulab.data.remote.HttpErrorLoggingInterceptor
 import com.karasu256.karasulab.data.remote.UserApi
 import com.karasu256.karasulab.data.remote.OriginInterceptor
+import com.karasu256.karasulab.data.remote.ReleaseRemoteHostConfig
+import com.karasu256.karasulab.data.remote.RemoteHostConfig
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -29,7 +32,7 @@ import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
-/** Marks the [OkHttpClient] that talks to auth.karasu256.com. */
+/** Marks the [OkHttpClient] that talks to api-auth.karasu256.com. */
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class AuthHttpClient
@@ -53,12 +56,18 @@ object AppModule {
         explicitNulls = false
     }
 
-    /** Provides the client for auth.karasu256.com, which sends the trusted `Origin` better-auth requires. */
+    /** Provides the remote hosts: the local environment for debug builds, the main one for release builds. */
+    @Provides
+    @Singleton
+    fun provideRemoteHostConfig(): RemoteHostConfig =
+        if (BuildConfig.DEBUG) DebugRemoteHostConfig() else ReleaseRemoteHostConfig()
+
+    /** Provides the client for the authentication server, which sends the trusted `Origin` better-auth requires. */
     @Provides
     @Singleton
     @AuthHttpClient
-    fun provideAuthHttpClient(): OkHttpClient {
-        val authUrl = BuildConfig.AUTH_BASE_URL.toHttpUrl()
+    fun provideAuthHttpClient(hosts: RemoteHostConfig): OkHttpClient {
+        val authUrl = hosts.authBaseUrl.toHttpUrl()
         return OkHttpClient.Builder()
             .addInterceptor(OriginInterceptor("${authUrl.scheme}://${authUrl.host}"))
             .addNetworkInterceptor(HttpErrorLoggingInterceptor())
@@ -81,8 +90,12 @@ object AppModule {
     /** Provides the better-auth service. */
     @Provides
     @Singleton
-    fun provideAuthApi(@AuthHttpClient client: OkHttpClient, json: Json): AuthApi = Retrofit.Builder()
-        .baseUrl(BuildConfig.AUTH_BASE_URL)
+    fun provideAuthApi(
+        @AuthHttpClient client: OkHttpClient,
+        json: Json,
+        hosts: RemoteHostConfig,
+    ): AuthApi = Retrofit.Builder()
+        .baseUrl(hosts.authBaseUrl)
         .client(client)
         .addConverterFactory(json.asConverterFactory(jsonMediaType))
         .build()
@@ -91,8 +104,12 @@ object AppModule {
     /** Provides the api.karasu256.com service. */
     @Provides
     @Singleton
-    fun provideUserApi(@ApiHttpClient client: OkHttpClient, json: Json): UserApi = Retrofit.Builder()
-        .baseUrl(BuildConfig.API_BASE_URL)
+    fun provideUserApi(
+        @ApiHttpClient client: OkHttpClient,
+        json: Json,
+        hosts: RemoteHostConfig,
+    ): UserApi = Retrofit.Builder()
+        .baseUrl(hosts.apiBaseUrl)
         .client(client)
         .addConverterFactory(json.asConverterFactory(jsonMediaType))
         .build()

@@ -15,9 +15,9 @@ interface GetSessionResponse {
   user?: { id: string; email?: string | null; name?: string | null; image?: string | null } | null;
 }
 
-/** Verifies the current session against auth.karasu256.com, since calling apps hold no auth credentials of their own. */
-export async function getSessionUser(authUrl: string | undefined, protectionBypassSecret?: string): Promise<SessionUser | null> {
-  if (!authUrl) {
+/** Verifies the current session against api-auth.karasu256.com, since calling apps hold no auth credentials of their own. */
+export async function getSessionUser(authApiUrl: string | undefined, protectionBypassSecret?: string): Promise<SessionUser | null> {
+  if (!authApiUrl) {
     logInfo('get_session_user', { result: 'skipped', reason: 'missing_auth_url' });
     return null;
   }
@@ -28,7 +28,7 @@ export async function getSessionUser(authUrl: string | undefined, protectionBypa
     return null;
   }
 
-  const url = `${authUrl}/api/auth/get-session`;
+  const url = `${authApiUrl}/api/auth/get-session`;
   try {
     const res = await fetch(url, {
       headers: { cookie: requestHeaders.get('cookie') ?? '', ...vercelProtectionBypassHeaders(protectionBypassSecret) },

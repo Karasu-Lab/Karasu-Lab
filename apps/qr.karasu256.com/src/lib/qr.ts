@@ -60,7 +60,7 @@ interface ResolvedSession {
 /**
  * Resolves the caller's uid, raw `Cookie` request header, and verified
  * bearer token. Prefers a caller-supplied JWT (verified against
- * auth.karasu256.com's JWKS via `verifyAppJwt`) over `getSessionUser`'s
+ * api-auth.karasu256.com's JWKS via `verifyAppJwt`) over `getSessionUser`'s
  * `Cookie`-forwarding check, since this app's own server can't rely on
  * that cookie reaching it — see `SessionProvider` in `@Hashibutogarasu/ui`,
  * which mints that JWT as the single source of truth for "who is logged
@@ -68,7 +68,7 @@ interface ResolvedSession {
  */
 async function resolveSession(bearerToken?: string | null): Promise<ResolvedSession> {
   const cookieHeader = (await headers()).get('cookie');
-  const authUrl = process.env.NEXT_PUBLIC_AUTH_URL;
+  const authUrl = process.env.NEXT_PUBLIC_AUTH_API_URL;
   const protectionBypassSecret = process.env.VERCEL_PROTECTION_BYPASS_SECRET;
 
   const uidFromToken = bearerToken ? await verifyAppJwt(bearerToken, authUrl, protectionBypassSecret) : null;

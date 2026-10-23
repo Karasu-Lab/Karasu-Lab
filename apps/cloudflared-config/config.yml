@@ -1,0 +1,24 @@
+tunnel: ff06b0d3-bb6c-4e4e-ace8-3a756251b4cc
+
+ingress:
+  - hostname: local.karasu256.com
+    service: http://localhost:3000
+  - hostname: local-accounts.karasu256.com
+    service: http://localhost:3001
+  - hostname: local-qr.karasu256.com
+    service: http://localhost:3002
+  - hostname: local-admin.karasu256.com
+    service: http://localhost:3003
+  - hostname: local-auth.karasu256.com
+    service: http://localhost:3004
+  - hostname: local-me.karasu256.com
+    service: http://localhost:3005
+  - hostname: local-api-admin.karasu256.com
+    service: http://localhost:3006
+  - hostname: local-cdn.karasu256.com
+    service: http://localhost:8788
+  - hostname: local-api.karasu256.com
+    service: http://localhost:8789
+  - hostname: local-api-auth.karasu256.com
+    service: http://localhost:8790
+  - service: http_status:404

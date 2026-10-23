@@ -2,7 +2,10 @@ package com.karasu256.karasulab.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.karasu256.karasulab.R
+import com.karasu256.karasulab.auth.CredentialProvider
 import com.karasu256.karasulab.data.AuthRepository
+import com.karasu256.karasulab.data.PasskeyRepository
 import com.karasu256.karasulab.data.ProfileRepository
 import com.karasu256.karasulab.data.local.UserProfileEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,6 +17,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.cancellation.CancellationException
@@ -23,6 +27,7 @@ import kotlin.coroutines.cancellation.CancellationException
 class HomeViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val profileRepository: ProfileRepository,
+    private val passkeyRepository: PasskeyRepository,
 ) : ViewModel() {
     /** The cached profile, or null when none is cached. */
     val profile: StateFlow<UserProfileEntity?> = profileRepository.profile
@@ -38,6 +43,10 @@ class HomeViewModel @Inject constructor(
     /** Emits once sign-out completes. */
     val signedOut: Flow<Unit> = _signedOut.receiveAsFlow()
 
+    private val _createPasskey = MutableStateFlow<CreatePasskeyState?>(null)
+
+    val createPasskey: StateFlow<CreatePasskeyState?> = _createPasskey.asStateFlow()
+
     init {
         viewModelScope.launch {
             try {
@@ -45,6 +54,40 @@ class HomeViewModel @Inject constructor(
             } catch (e: CancellationException) {
                 throw e
             } catch (_: Exception) {
+            }
+        }
+    }
+
+    fun openCreatePasskey() {
+        _createPasskey.value = CreatePasskeyState()
+    }
+
+    fun closeCreatePasskey() {
+        if (_createPasskey.value?.isBusy == true) return
+        _createPasskey.value = null
+    }
+
+    fun onPasskeyNameChange(name: String) {
+        _createPasskey.update { it?.copy(name = name, errorMessage = null) }
+    }
+
+    fun createPasskey(credentials: CredentialProvider) {
+        val state = _createPasskey.value ?: return
+        if (!state.canCreate) return
+        _createPasskey.value = state.copy(isBusy = true, errorMessage = null)
+        viewModelScope.launch {
+            val registered = try {
+                passkeyRepository.register(state.name.trim(), credentials)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+                _createPasskey.update { it?.copy(isBusy = false, errorMessage = R.string.error_passkey_create_failed) }
+                return@launch
+            }
+            if (registered) {
+                _createPasskey.value = null
+            } else {
+                _createPasskey.update { it?.copy(isBusy = false) }
             }
         }
     }

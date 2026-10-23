@@ -17,7 +17,7 @@ function getImageApiUrl(): string {
 export async function DELETE(request: Request) {
   const authHeader = request.headers.get('authorization');
   const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
-  const uid = bearerToken ? await verifyAppJwt(bearerToken, process.env.NEXT_PUBLIC_AUTH_URL, process.env.VERCEL_PROTECTION_BYPASS_SECRET) : null;
+  const uid = bearerToken ? await verifyAppJwt(bearerToken, process.env.NEXT_PUBLIC_AUTH_API_URL, process.env.VERCEL_PROTECTION_BYPASS_SECRET) : null;
   if (!bearerToken || !uid) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }

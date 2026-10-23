@@ -38,6 +38,6 @@ COPY --from=builder --chown=nestjs:nodejs /app/apps/api.admin.karasu256.com/dist
 COPY --from=builder --chown=nestjs:nodejs /app/apps/api.admin.karasu256.com/configs ./configs
 
 USER nestjs
-EXPOSE 3004
+EXPOSE 3006
 ENV NODE_ENV=production
 CMD ["node", "dist/main"]

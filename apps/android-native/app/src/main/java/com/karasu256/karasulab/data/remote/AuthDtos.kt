@@ -16,6 +16,20 @@ data class EmailSignInRequest(
 )
 
 /**
+ * Body of better-auth's `POST /api/auth/sign-up/email`.
+ *
+ * @property name the new account's display name.
+ * @property email the new account's email address.
+ * @property password the new account's password.
+ */
+@Serializable
+data class EmailSignUpRequest(
+    val name: String,
+    val email: String,
+    val password: String,
+)
+
+/**
  * Body of better-auth's `POST /api/auth/sign-in/social` when signing in with a provider-issued ID token.
  *
  * @property provider better-auth provider id, e.g. `google`.
@@ -47,6 +61,24 @@ data class PasskeyVerifyRequest(
     val response: JsonElement,
 )
 
+@Serializable
+data class PasskeyRegisterRequest(
+    val response: JsonElement,
+    val name: String,
+)
+
+@Serializable
+data class DeletePasskeyRequest(
+    val id: String,
+)
+
+@Serializable
+data class PasskeyResponse(
+    val id: String,
+    val name: String? = null,
+    val createdAt: String? = null,
+)
+
 /**
  * The part of better-auth's `GET /api/auth/get-session` body the app reads. The body is `null` when the session is invalid.
  *
@@ -65,6 +97,18 @@ data class GetSessionResponse(
 @Serializable
 data class SessionUser(
     val id: String,
+)
+
+/**
+ * Body of the API's `GET /meta`, which the API worker reports about itself.
+ *
+ * @property apiUrl the origin the API is served from.
+ * @property gitBranch the git branch the API was built from.
+ */
+@Serializable
+data class MetaResponse(
+    val apiUrl: String,
+    val gitBranch: String,
 )
 
 /**

@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
 
 const AUTH_URL = 'http://localhost:3004';
+const AUTH_API_URL = 'http://localhost:8790';
 
 test('signs in on auth, returns to settings, and signs out', async ({ page, request }) => {
   const email = `e2e-sign-in-${Date.now()}@example.test`;
   const password = `pw-${crypto.randomUUID()}`;
 
-  const signUpRes = await request.post(`${AUTH_URL}/api/auth/sign-up/email`, {
+  const signUpRes = await request.post(`${AUTH_API_URL}/api/auth/sign-up/email`, {
     headers: { Origin: AUTH_URL },
     data: { email, password, name: email },
   });
@@ -26,7 +27,7 @@ test('signs in on auth, returns to settings, and signs out', async ({ page, requ
   await page.getByRole('menuitem', { name: 'サインアウト' }).click();
   await page.waitForURL(`${AUTH_URL}/sign-in?**`);
 
-  const sessionRes = await page.request.get(`${AUTH_URL}/api/auth/get-session`);
+  const sessionRes = await page.request.get(`${AUTH_API_URL}/api/auth/get-session`);
   expect(sessionRes.ok()).toBeTruthy();
   expect(await sessionRes.json()).toBeNull();
 });

@@ -29,7 +29,7 @@ class SessionTokenExchanger @Inject constructor(
      * Exchanges [cookie] for a custom token and stores both.
      *
      * @return the stored token, or null when the session is no longer valid.
-     * @throws HttpException when auth.karasu256.com fails for any other reason.
+     * @throws HttpException when api-auth.karasu256.com fails for any other reason.
      */
     suspend fun exchange(cookie: SessionCookie): AuthTokenEntity? {
         val response = authApi.getSession(cookie.toHeader())

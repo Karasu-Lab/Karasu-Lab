@@ -1,6 +1,6 @@
 import { createHash, randomBytes } from 'node:crypto';
 import { expect, type APIRequestContext, type Page } from '@playwright/test';
-import { ACCOUNTS_URL, AUTH_URL, MOCK_OAUTH_URL } from '../playwright.config';
+import { ACCOUNTS_URL, AUTH_API_URL, AUTH_URL, MOCK_OAUTH_URL } from '../playwright.config';
 
 export type MockMode = 'redirect' | 'tamper-state';
 
@@ -30,7 +30,7 @@ export async function configureMockOAuth(request: APIRequestContext, mode: MockM
 
 export async function signUp(request: APIRequestContext, label: string): Promise<TestUser> {
   const user = { email: uniqueEmail(label), password: `pw-${randomBytes(8).toString('hex')}` };
-  const res = await request.post(`${AUTH_URL}/api/auth/sign-up/email`, {
+  const res = await request.post(`${AUTH_API_URL}/api/auth/sign-up/email`, {
     headers: { Origin: AUTH_URL },
     data: { ...user, name: user.email },
   });
@@ -45,7 +45,7 @@ export async function fillEmailPassword(page: Page, user: TestUser): Promise<voi
 }
 
 export async function sessionEmail(page: Page): Promise<string | null> {
-  const res = await page.request.get(`${AUTH_URL}/api/auth/get-session`);
+  const res = await page.request.get(`${AUTH_API_URL}/api/auth/get-session`);
   expect(res.ok()).toBeTruthy();
   const session = (await res.json()) as { user?: { email: string } } | null;
   return session?.user?.email ?? null;
@@ -58,7 +58,7 @@ export function createPkcePair(): { verifier: string; challenge: string } {
 }
 
 export function providerCallbackPattern(provider: 'google' | 'github'): RegExp {
-  return new RegExp(`^${AUTH_URL}/api/auth/(oauth2/)?callback/${provider}\\?`);
+  return new RegExp(`^${AUTH_API_URL}/api/auth/(oauth2/)?callback/${provider}\\?`);
 }
 
 export function recordProviderStates(page: Page, provider: 'google' | 'github') {

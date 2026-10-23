@@ -9,7 +9,7 @@ export interface ProviderProfile {
 
 /**
  * Fetches the current user's profile for a linked provider from
- * auth.karasu256.com, which alone can decrypt the stored provider tokens.
+ * api-auth.karasu256.com, which alone can decrypt the stored provider tokens.
  *
  * @returns `null` when the provider isn't linked or its profile can't be resolved.
  */

@@ -24,7 +24,7 @@ export default async function RootLayout({
 }>) {
   const locale = await getLocale();
   const messages = await getMessages();
-  const sessionUser = await getSessionUser(process.env.NEXT_PUBLIC_AUTH_URL, process.env.VERCEL_PROTECTION_BYPASS_SECRET);
+  const sessionUser = await getSessionUser(process.env.NEXT_PUBLIC_AUTH_API_URL, process.env.VERCEL_PROTECTION_BYPASS_SECRET);
   const initialUser = sessionUser
     ? { uid: sessionUser.uid, iconUrl: sessionUser.image, displayName: sessionUser.name, email: sessionUser.email }
     : null;
@@ -33,7 +33,7 @@ export default async function RootLayout({
     <html lang={locale} className={`${geistSans.variable} ${geistMono.variable} ${notoSansJP.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider messages={messages}>
-          <SessionProvider baseURL={process.env.NEXT_PUBLIC_AUTH_URL} initialUser={initialUser}>
+          <SessionProvider baseURL={process.env.NEXT_PUBLIC_AUTH_API_URL} initialUser={initialUser}>
             <R2StorageProvider imageApiUrl={process.env.CDN_URL!}>
               <RedisProvider redisURL={process.env.REDIS_URL!}>
                 <PopUpMenuProvider>

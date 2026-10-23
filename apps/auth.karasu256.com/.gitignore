@@ -31,3 +31,4 @@ next-env.d.ts
 # Drizzle
 drizzle/*
 !drizzle/migrations
+.vercel

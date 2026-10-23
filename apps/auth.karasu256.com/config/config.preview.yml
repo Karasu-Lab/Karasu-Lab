@@ -1,12 +1,3 @@
-webauthn:
-  rpId: karasu256.com
-  expectedOrigins:
-    - https://dev.accounts.karasu256.com
-    - https://dev-auth.karasu256.com
-    - https://dev.karasu256.com
-    - android:apk-key-hash:bfKpYRlXNOkeRYJCoMaSQi9kSA6IKX4TYjuCHg35mws
-    - android:apk-key-hash:uo795W5PTsfIrzRiahbhbBMqqve55APHGJ3H55qPlDk
-
 trustedOrigins:
   - https://dev.accounts.karasu256.com
   - https://dev-auth.karasu256.com

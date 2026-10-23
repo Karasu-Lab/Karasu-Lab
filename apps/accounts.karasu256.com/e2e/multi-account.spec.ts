@@ -20,15 +20,16 @@ interface CreateTestAccountResult {
 }
 
 const AUTH_URL = 'http://localhost:3004';
+const AUTH_API_URL = 'http://localhost:8790';
 
 async function createTestAccount(request: APIRequestContext, label: string): Promise<CreateTestAccountResult> {
-  const res = await request.post(`${AUTH_URL}/api/test/accounts`, { data: { label } });
+  const res = await request.post(`${AUTH_API_URL}/api/test/accounts`, { data: { label } });
   expect(res.ok(), `failed to create test account "${label}"`).toBeTruthy();
   return res.json();
 }
 
 async function deleteTestAccount(request: APIRequestContext, uid: string): Promise<void> {
-  await request.delete(`${AUTH_URL}/api/test/accounts`, { data: { uid } });
+  await request.delete(`${AUTH_API_URL}/api/test/accounts`, { data: { uid } });
 }
 
 async function fillSignInForm(page: Page, account: CreateTestAccountResult) {
@@ -50,7 +51,7 @@ async function signInViaUi(page: Page, account: CreateTestAccountResult) {
  * the current one) and makes it the active session.
  */
 async function addAccountViaApi(page: Page, account: CreateTestAccountResult): Promise<{ sessionToken: string }> {
-  const res = await page.request.post(`${AUTH_URL}/api/auth/sign-in/email`, {
+  const res = await page.request.post(`${AUTH_API_URL}/api/auth/sign-in/email`, {
     headers: { Origin: AUTH_URL },
     data: { email: account.email, password: account.password },
   });

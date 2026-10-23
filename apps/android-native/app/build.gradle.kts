@@ -39,8 +39,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "AUTH_BASE_URL", "\"https://dev-auth.karasu256.com/\"")
-        buildConfigField("String", "API_BASE_URL", "\"https://dev-api.karasu256.com/\"")
         buildConfigField(
             "String",
             "GOOGLE_SERVER_CLIENT_ID",
@@ -95,6 +93,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.text.google.fonts)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

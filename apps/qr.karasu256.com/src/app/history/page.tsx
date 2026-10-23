@@ -12,7 +12,7 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
   const page = Math.max(1, Number.parseInt(p ?? '1', 10) || 1);
   const t = await getTranslations('history');
 
-  const sessionUser = await getSessionUser(process.env.NEXT_PUBLIC_AUTH_URL, process.env.VERCEL_PROTECTION_BYPASS_SECRET);
+  const sessionUser = await getSessionUser(process.env.NEXT_PUBLIC_AUTH_API_URL, process.env.VERCEL_PROTECTION_BYPASS_SECRET);
   if (!sessionUser) {
     return (
       <div className="flex flex-1 items-center justify-center p-6">

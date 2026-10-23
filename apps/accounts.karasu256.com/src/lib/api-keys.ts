@@ -77,6 +77,6 @@ export function buildIssueApiKeyRequest(userId: string, name: string, options: {
 
 async function issueApiKey(userId: string, name: string): Promise<IssuedApiKey> {
   const res = await sendSignedAuthRequest(buildIssueApiKeyRequest(userId, name));
-  if (!res.ok) throw new Error(`auth.karasu256.com responded ${res.status} for ${res.url}`);
+  if (!res.ok) throw new Error(`api-auth.karasu256.com responded ${res.status} for ${res.url}`);
   return (await res.json()) as IssuedApiKey;
 }

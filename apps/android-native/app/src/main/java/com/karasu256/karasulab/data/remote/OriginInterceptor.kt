@@ -7,7 +7,7 @@ import okhttp3.Response
  * Adds an `Origin` header to every non-GET request, since better-auth rejects state-changing
  * requests that carry cookies unless they come from one of its trusted origins.
  *
- * @property origin the trusted origin to send, e.g. `https://dev-auth.karasu256.com`.
+ * @property origin the trusted origin to send, e.g. `https://dev-api-auth.karasu256.com`.
  */
 class OriginInterceptor(private val origin: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {

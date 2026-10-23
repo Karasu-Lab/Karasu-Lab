@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "run": "docker compose up -d --wait --build",
+    "run:android": "docker compose up -d --wait --build db db-migrate auth firebase",
     "reset": "docker compose down -v && docker compose up -d --wait --build",
     "stop": "docker compose stop",
     "cleanup": "docker compose down -v --rmi local"

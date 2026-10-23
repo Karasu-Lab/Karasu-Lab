@@ -7,6 +7,8 @@
     "./server/sign-out": "./src/server/sign-out.ts",
     "./server/log": "./src/server/log.ts",
     "./server/vercel-bypass": "./src/server/vercel-bypass.ts",
+    "./server/app-jwt": "./src/server/app-jwt.ts",
+    "./server/request-signature": "./src/server/request-signature.ts",
     "./email": "./src/email/index.ts",
     "./client": "./src/client/index.ts",
     "./validation": "./src/validation/index.ts",
@@ -14,13 +16,13 @@
   },
   "dependencies": {
     "@Hashibutogarasu/api-permissions": "workspace:*",
-    "@better-auth/oauth-provider": "^1.6.23",
-    "@better-auth/passkey": "1.6.23",
+    "@better-auth/oauth-provider": "^1.7.12",
+    "@better-auth/passkey": "1.7.12",
     "@react-email/components": "^1.0.12",
-    "better-auth": "^1.6.23",
+    "better-auth": "^1.7.12",
     "jose": "^6.2.3",
     "resend": "^4.0.0",
-    "zod": "^4.4.3"
+    "zod": "^4.5.4"
   },
   "peerDependencies": {
     "next": "^15.3.9",

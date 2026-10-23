@@ -9,3 +9,9 @@ This is my website workdirectory managed by pnpm.
 ```
 pnpm install/i
 ```
+
+### Build
+
+```
+pnpm build
+```

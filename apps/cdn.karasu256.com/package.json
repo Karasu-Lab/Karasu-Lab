@@ -16,7 +16,7 @@
     "@elysiajs/cors": "^1.4.2",
     "elysia": "^1.4.29",
     "jose": "^6.2.3",
-    "zod": "^4.4.3"
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@sinclair/typebox": "^0.34.49",

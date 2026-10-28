@@ -1,0 +1,35 @@
+{
+  "Metadata": {
+    "signIn": { "title": "Sign in with SSO" },
+    "signOut": { "title": "Signing out" },
+    "siteDescription": "Single sign-on for Karasu Lab",
+    "siteTitle": "Karasu Lab"
+  },
+  "settings": { "signingOut": "Signing out" },
+  "sso": {
+    "connection": {
+      "acsUrl": "ACS URL (where SAML responses are posted)",
+      "copied": "Copied",
+      "copy": "Copy",
+      "description": "The Karasu Lab (Service Provider) values an identity provider administrator needs to configure a SAML 2.0 connection. Replace {providerId} in the URLs with the ID of the registered SSO provider.",
+      "entityId": "SP Entity ID (Audience)",
+      "metadataUrl": "SP metadata URL",
+      "title": "SAML connection information"
+    },
+    "description": "Enter your work email address and you will be taken to your organization's identity provider (IdP). You enter your password there, not on Karasu Lab.",
+    "email": "Work email address",
+    "emailHint": "The email domain decides which IdP you are sent to",
+    "error": {
+      "invalid_saml_response": "The SSO response could not be verified. Please try again.",
+      "provider_not_found": "SSO is not configured for this domain. Check with your organization's administrator, or sign in another way.",
+      "replay_detected": "This SSO response has already been used. Please sign in again.",
+      "unknown": "SSO sign-in failed. Please try again.",
+      "unsolicited_response": "IdP-initiated SSO is not allowed."
+    },
+    "or": "or",
+    "signingIn": "Taking you to your IdP",
+    "submit": "Continue with SSO",
+    "title": "Sign in with your organization's SSO",
+    "usePassword": "Sign in with email and password"
+  }
+}

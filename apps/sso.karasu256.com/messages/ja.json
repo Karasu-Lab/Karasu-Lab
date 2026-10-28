@@ -1,0 +1,35 @@
+{
+  "Metadata": {
+    "signIn": { "title": "SSOでサインイン" },
+    "signOut": { "title": "サインアウト中" },
+    "siteDescription": "Karasu Lab シングルサインオン",
+    "siteTitle": "Karasu Lab"
+  },
+  "settings": { "signingOut": "サインアウト中" },
+  "sso": {
+    "connection": {
+      "acsUrl": "ACS URL (SAML応答の送信先)",
+      "copied": "コピーしました",
+      "copy": "コピー",
+      "description": "IdP管理者が SAML 2.0 接続を設定するための、Karasu Lab (Service Provider) 側の情報です。URL中の {providerId} は、登録されたSSOプロバイダーのIDに置き換えてください。",
+      "entityId": "SP Entity ID (Audience)",
+      "metadataUrl": "SPメタデータ URL",
+      "title": "SAML接続情報"
+    },
+    "description": "仕事用メールアドレスを入力すると、所属組織の ID プロバイダー (IdP) へ移動します。パスワードは Karasu Lab ではなく、所属組織側で入力します。",
+    "email": "仕事用メールアドレス",
+    "emailHint": "メールアドレスのドメインから接続先の IdP を特定します",
+    "error": {
+      "invalid_saml_response": "SSOの応答を検証できませんでした。もう一度お試しください。",
+      "provider_not_found": "このドメイン向けのSSOは設定されていません。組織の管理者に確認するか、別の方法でサインインしてください。",
+      "replay_detected": "このSSO応答は既に使用されています。もう一度サインインしてください。",
+      "unknown": "SSOサインインに失敗しました。もう一度お試しください。",
+      "unsolicited_response": "IdP側から開始するSSOは許可されていません。"
+    },
+    "or": "または",
+    "signingIn": "IdPへ移動中",
+    "submit": "SSOで続行",
+    "title": "組織のSSOでサインイン",
+    "usePassword": "メールアドレスとパスワードでサインイン"
+  }
+}

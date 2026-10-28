@@ -1,27 +1,49 @@
 {
   "Metadata": {
-    "signIn": { "title": "サインイン" },
-    "signOut": { "title": "サインアウト中" },
+    "signIn": {
+      "title": "サインイン"
+    },
+    "signOut": {
+      "title": "サインアウト中"
+    },
     "siteDescription": "Karasu Lab シングルサインオン",
     "siteTitle": "Karasu Lab"
   },
-  "settings": { "signingOut": "サインアウト中" },
+  "settings": {
+    "signingOut": "サインアウト中"
+  },
   "signIn": {
     "addAccount": "アカウントを追加",
-    "chooser": { "description": "続行するにはアカウントを選択してください", "title": "アカウントを選択" },
+    "chooser": {
+      "description": "続行するにはアカウントを選択してください",
+      "title": "アカウントを選択"
+    },
     "email": "メールアドレス",
     "emailDescription": "メールアドレスを入力してください。ドメインにSSOが設定されている場合は、所属組織の ID プロバイダー (IdP) へ移動します。",
     "error": {
       "accountNotFound": "このメールアドレスのアカウントが見つかりませんでした",
       "invalidPassword": "パスワードが違います。もう一度お試しください",
-      "noPassword": "このアカウントはパスワードでサインインできません。登録済みの別の方法でサインインしてください",
-      "unknown": "サインインに失敗しました。もう一度お試しください"
+      "unknown": "サインインに失敗しました。もう一度お試しください",
+      "noMethod": "このアカウントはパスワードもパスキーも設定されていません。登録済みの別の方法でサインインしてください",
+      "passkeyFailed": "パスキーでのサインインに失敗しました。もう一度お試しください",
+      "passkeyMismatch": "入力したメールアドレスとは別のアカウントのパスキーが使われました"
     },
     "login": "ログイン",
     "next": "次へ",
     "password": "パスワード",
     "passwordTitle": "パスワードを入力",
-    "title": "サインイン"
+    "title": "サインイン",
+    "passkey": {
+      "title": "パスキーでサインイン",
+      "description": "このアカウントにはパスキーが登録されています。本人確認のため、パスキーを使用してください。",
+      "button": "パスキーを使用"
+    },
+    "methods": {
+      "title": "サインイン方法を選択",
+      "other": "他の手段を選択",
+      "password": "パスワードでサインイン",
+      "none": "利用できる他のサインイン方法はありません。"
+    }
   },
   "sso": {
     "connection": {

@@ -1,27 +1,49 @@
 {
   "Metadata": {
-    "signIn": { "title": "Sign in" },
-    "signOut": { "title": "Signing out" },
+    "signIn": {
+      "title": "Sign in"
+    },
+    "signOut": {
+      "title": "Signing out"
+    },
     "siteDescription": "Single sign-on for Karasu Lab",
     "siteTitle": "Karasu Lab"
   },
-  "settings": { "signingOut": "Signing out" },
+  "settings": {
+    "signingOut": "Signing out"
+  },
   "signIn": {
     "addAccount": "Add an account",
-    "chooser": { "description": "Choose an account to continue", "title": "Choose an account" },
+    "chooser": {
+      "description": "Choose an account to continue",
+      "title": "Choose an account"
+    },
     "email": "Email address",
     "emailDescription": "Enter your email address. If SSO is configured for its domain, you will be taken to your organization's identity provider (IdP).",
     "error": {
       "accountNotFound": "No account was found for this email address",
       "invalidPassword": "The password is incorrect. Please try again",
-      "noPassword": "This account cannot sign in with a password. Please use another method you registered",
-      "unknown": "Sign-in failed. Please try again"
+      "unknown": "Sign-in failed. Please try again",
+      "noMethod": "This account has neither a password nor a passkey set. Please use another method you registered",
+      "passkeyFailed": "Passkey sign-in failed. Please try again",
+      "passkeyMismatch": "The passkey used belongs to a different account than the email address entered"
     },
     "login": "Sign in",
     "next": "Next",
     "password": "Password",
     "passwordTitle": "Enter your password",
-    "title": "Sign in"
+    "title": "Sign in",
+    "passkey": {
+      "title": "Sign in with a passkey",
+      "description": "This account has a passkey registered. Use it to verify it is you.",
+      "button": "Use a passkey"
+    },
+    "methods": {
+      "title": "Choose how to sign in",
+      "other": "Choose another way",
+      "password": "Sign in with a password",
+      "none": "No other sign-in methods are available."
+    }
   },
   "sso": {
     "connection": {

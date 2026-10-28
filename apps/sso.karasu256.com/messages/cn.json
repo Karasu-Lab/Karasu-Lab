@@ -1,27 +1,49 @@
 {
   "Metadata": {
-    "signIn": { "title": "登录" },
-    "signOut": { "title": "正在退出登录" },
+    "signIn": {
+      "title": "登录"
+    },
+    "signOut": {
+      "title": "正在退出登录"
+    },
     "siteDescription": "Karasu Lab 单点登录",
     "siteTitle": "Karasu Lab"
   },
-  "settings": { "signingOut": "正在退出登录" },
+  "settings": {
+    "signingOut": "正在退出登录"
+  },
   "signIn": {
     "addAccount": "添加账号",
-    "chooser": { "description": "请选择要继续使用的账号", "title": "选择账号" },
+    "chooser": {
+      "description": "请选择要继续使用的账号",
+      "title": "选择账号"
+    },
     "email": "邮箱地址",
     "emailDescription": "请输入邮箱地址。如果该域名已配置 SSO,将跳转到所属组织的身份提供商 (IdP)。",
     "error": {
       "accountNotFound": "未找到使用此邮箱地址的账号",
       "invalidPassword": "密码不正确。请重试",
-      "noPassword": "此账号无法使用密码登录。请使用已注册的其他方式登录",
-      "unknown": "登录失败。请重试"
+      "unknown": "登录失败。请重试",
+      "noMethod": "此账号既未设置密码,也未设置通行密钥。请使用已注册的其他方式登录",
+      "passkeyFailed": "通行密钥登录失败。请重试",
+      "passkeyMismatch": "所使用的通行密钥属于与输入邮箱不同的账号"
     },
     "login": "登录",
     "next": "下一步",
     "password": "密码",
     "passwordTitle": "输入密码",
-    "title": "登录"
+    "title": "登录",
+    "passkey": {
+      "title": "使用通行密钥登录",
+      "description": "此账号已注册通行密钥。请使用通行密钥验证身份。",
+      "button": "使用通行密钥"
+    },
+    "methods": {
+      "title": "选择登录方式",
+      "other": "选择其他方式",
+      "password": "使用密码登录",
+      "none": "没有其他可用的登录方式。"
+    }
   },
   "sso": {
     "connection": {

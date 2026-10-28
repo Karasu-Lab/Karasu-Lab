@@ -5,6 +5,8 @@ export interface SignInLookup {
   sso: boolean;
   /** The account can sign in with a password (it has a credential account). */
   hasPassword: boolean;
+  /** The account has at least one passkey registered. */
+  hasPasskey: boolean;
 }
 
 /**

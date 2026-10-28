@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ChevronLeft, KeyRound, LoaderCircle, Plus } from 'lucide-react';
+import { ChevronLeft, Fingerprint, KeyRound, LoaderCircle, LockKeyhole, Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button, Input, Label, UserAvatar, toast } from '@Hashibutogarasu/ui';
 import { authClient } from '@/lib/auth/client';
-import { lookupSignIn } from '@/lib/sign-in-lookup';
+import { lookupSignIn, type SignInLookup } from '@/lib/sign-in-lookup';
 
 export interface SignInFlowProps {
   continueTo: string;
@@ -16,7 +16,10 @@ export interface SignInFlowProps {
 
 const KNOWN_ERROR_CODES = ['provider_not_found', 'invalid_saml_response', 'replay_detected', 'unsolicited_response'] as const;
 
-type Step = 'chooser' | 'email' | 'password';
+type Step = 'chooser' | 'email' | 'passkey' | 'methods' | 'password';
+
+/** The sliding form panels, in order. The chooser is not part of the track. */
+const FORM_STEPS: readonly Step[] = ['email', 'passkey', 'methods', 'password'];
 
 interface DeviceSessionEntry {
   session: { token: string };
@@ -40,11 +43,12 @@ function ProgressBar({ active }: { active: boolean }) {
  * the left and the working area on the right. It opens on an account
  * chooser listing the device sessions already signed in to Karasu Lab
  * (multi-session); picking one activates it and continues. Adding an
- * account asks for an email address first, looks up how that address
- * signs in, and then either leaves for the domain's identity provider,
- * slides the working area over to a password field, or explains inline
- * why it cannot continue. The `continueTo` callback context is held in
- * this component's props for the whole flow, so no step loses it.
+ * account asks for an email address first and looks up how that address
+ * signs in: a domain with an SSO provider leaves for its identity
+ * provider, an account with a passkey is asked for the passkey first, and
+ * every other account reaches the password field through an explicit
+ * "another way" method choice. The `continueTo` callback context is held
+ * in this component's props for the whole flow, so no step loses it.
  */
 export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
   const t = useTranslations();
@@ -52,8 +56,11 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
   const [step, setStep] = useState<Step>('email');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [lookup, setLookup] = useState<SignInLookup | null>(null);
+  const [methodsExpanded, setMethodsExpanded] = useState(false);
   const [busy, setBusy] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [passkeyError, setPasskeyError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -95,9 +102,13 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
     e.preventDefault();
     setBusy(true);
     setEmailError(null);
+    setPasskeyError(null);
+    setPasswordError(null);
+    setPassword('');
     try {
-      const lookup = await lookupSignIn(email);
-      if (lookup.sso) {
+      const result = await lookupSignIn(email);
+      setLookup(result);
+      if (result.sso) {
         const { data, error } = await authClient.signIn.sso({ email, callbackURL: continueTo });
         const url = (data as { url?: string } | null)?.url;
         if (!error && url) {
@@ -105,19 +116,44 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
           return;
         }
         setEmailError(t('sso.error.provider_not_found'));
-      } else if (!lookup.exists) {
+      } else if (!result.exists) {
         setEmailError(t('signIn.error.accountNotFound'));
-      } else if (!lookup.hasPassword) {
-        setEmailError(t('signIn.error.noPassword'));
+      } else if (result.hasPasskey) {
+        // A registered passkey is always asked for before anything else.
+        setStep('passkey');
+      } else if (result.hasPassword) {
+        // Without a passkey, the password field is reached by explicitly
+        // choosing it under "another way" on the methods step.
+        setMethodsExpanded(false);
+        setStep('methods');
       } else {
-        setPassword('');
-        setPasswordError(null);
-        setStep('password');
+        setEmailError(t('signIn.error.noMethod'));
       }
     } catch {
       setEmailError(t('signIn.error.unknown'));
     }
     setBusy(false);
+  }
+
+  async function handlePasskey() {
+    setBusy(true);
+    setPasskeyError(null);
+    const { error } = await authClient.signIn.passkey();
+    if (error) {
+      setPasskeyError(t('signIn.error.passkeyFailed'));
+      setBusy(false);
+      return;
+    }
+    // The passkey ceremony is discoverable-credential based, so confirm
+    // it signed in the account whose email address was entered.
+    const { data: session } = await authClient.getSession();
+    if (session && session.user.email.toLowerCase() !== email.trim().toLowerCase()) {
+      await authClient.signOut();
+      setPasskeyError(t('signIn.error.passkeyMismatch'));
+      setBusy(false);
+      return;
+    }
+    window.location.replace(continueTo);
   }
 
   async function handlePasswordSubmit(e: React.FormEvent) {
@@ -133,6 +169,23 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
     const url = (data as { url?: string } | null)?.url;
     window.location.replace(url ?? continueTo);
   }
+
+  /** Small pill that names the entered address and slides back to the email step. */
+  function emailChip(disabled: boolean) {
+    return (
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => setStep('email')}
+        className="flex max-w-full items-center gap-1 rounded-full py-1 pr-3 pl-1 text-sm text-muted-foreground transition-colors hover:bg-muted disabled:opacity-50"
+      >
+        <ChevronLeft className="h-4 w-4 shrink-0" />
+        <span className="truncate">{email}</span>
+      </button>
+    );
+  }
+
+  const formStepIndex = Math.max(0, FORM_STEPS.indexOf(step));
 
   return (
     <div className="relative w-full max-w-3xl overflow-hidden rounded-xl bg-card text-sm text-card-foreground shadow-sm ring-1 ring-foreground/10">
@@ -191,10 +244,7 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
             </div>
           ) : (
             <div className="overflow-hidden">
-              <div
-                className="flex transition-transform duration-300 ease-in-out"
-                style={{ transform: step === 'password' ? 'translateX(-100%)' : 'translateX(0)' }}
-              >
+              <div className="flex transition-transform duration-300 ease-in-out" style={{ transform: `translateX(-${formStepIndex * 100}%)` }}>
                 <form onSubmit={handleEmailSubmit} className="w-full shrink-0" aria-hidden={step !== 'email'}>
                   <h1 className="text-lg font-semibold">{t('signIn.title')}</h1>
                   <p className="mt-1 text-sm text-muted-foreground">{t('signIn.emailDescription')}</p>
@@ -219,16 +269,66 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
                   </div>
                 </form>
 
+                <div className="w-full shrink-0" aria-hidden={step !== 'passkey'}>
+                  {emailChip(busy || step !== 'passkey')}
+                  <div className="mt-4 flex flex-col items-center text-center">
+                    <span className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
+                      <Fingerprint className="h-7 w-7 text-muted-foreground" />
+                    </span>
+                    <h1 className="mt-3 text-lg font-semibold">{t('signIn.passkey.title')}</h1>
+                    <p className="mt-1 text-sm text-muted-foreground">{t('signIn.passkey.description')}</p>
+                  </div>
+                  <div className="mt-6 space-y-2">
+                    <Button type="button" className="w-full" disabled={busy || step !== 'passkey'} onClick={() => void handlePasskey()}>
+                      {t('signIn.passkey.button')}
+                    </Button>
+                    {passkeyError && <p className="text-sm text-destructive">{passkeyError}</p>}
+                  </div>
+                  <div className="mt-6 flex justify-center">
+                    <button
+                      type="button"
+                      disabled={busy || step !== 'passkey'}
+                      onClick={() => {
+                        setMethodsExpanded(true);
+                        setStep('methods');
+                      }}
+                      className="text-sm font-medium text-primary hover:underline disabled:opacity-50"
+                    >
+                      {t('signIn.methods.other')}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="w-full shrink-0" aria-hidden={step !== 'methods'}>
+                  {emailChip(busy || step !== 'methods')}
+                  <h1 className="mt-2 text-lg font-semibold">{t('signIn.methods.title')}</h1>
+                  {methodsExpanded ? (
+                    <div className="mt-6">
+                      {lookup?.hasPassword ? (
+                        <button
+                          type="button"
+                          disabled={busy || step !== 'methods'}
+                          onClick={() => setStep('password')}
+                          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left ring-1 ring-foreground/10 transition-colors hover:bg-muted disabled:opacity-50"
+                        >
+                          <LockKeyhole className="h-5 w-5 shrink-0 text-muted-foreground" />
+                          <span className="font-medium">{t('signIn.methods.password')}</span>
+                        </button>
+                      ) : (
+                        <p className="text-sm text-muted-foreground">{t('signIn.methods.none')}</p>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="mt-6">
+                      <Button type="button" disabled={busy || step !== 'methods'} onClick={() => setMethodsExpanded(true)}>
+                        {t('signIn.methods.other')}
+                      </Button>
+                    </div>
+                  )}
+                </div>
+
                 <form onSubmit={handlePasswordSubmit} className="w-full shrink-0" aria-hidden={step !== 'password'}>
-                  <button
-                    type="button"
-                    disabled={busy || step !== 'password'}
-                    onClick={() => setStep('email')}
-                    className="flex max-w-full items-center gap-1 rounded-full py-1 pr-3 pl-1 text-sm text-muted-foreground transition-colors hover:bg-muted disabled:opacity-50"
-                  >
-                    <ChevronLeft className="h-4 w-4 shrink-0" />
-                    <span className="truncate">{email}</span>
-                  </button>
+                  {emailChip(busy || step !== 'password')}
                   <h1 className="mt-2 text-lg font-semibold">{t('signIn.passwordTitle')}</h1>
                   <div className="mt-6 space-y-2">
                     <Label htmlFor="sign-in-password">{t('signIn.password')}</Label>

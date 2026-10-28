@@ -6,19 +6,19 @@ test.describe('SSO sign-in page', () => {
     await expect(page).toHaveURL(/\/sign-in$/);
   });
 
-  test('shows the SSO form and the SAML connection information', async ({ page }) => {
+  test('shows the email step and the SAML connection information', async ({ page }) => {
     await page.goto('/sign-in');
-    await expect(page.getByRole('textbox', { name: '仕事用メールアドレス' })).toBeVisible();
-    await expect(page.getByRole('button', { name: /SSOで続行/ })).toBeVisible();
+    await expect(page.getByRole('textbox', { name: 'メールアドレス' })).toBeVisible();
+    await expect(page.getByRole('button', { name: '次へ', exact: true })).toBeVisible();
     await expect(page.getByText('SAML接続情報')).toBeVisible();
     await expect(page.getByText(/\/api\/auth\/sso\/saml2\/sp\/metadata/)).toBeVisible();
     await expect(page.getByText(/\/api\/auth\/sso\/saml2\/sp\/acs\/\{providerId\}/)).toBeVisible();
   });
 
-  test('rejects an email whose domain has no SSO provider', async ({ page }) => {
+  test('shows an inline error for an email with no account', async ({ page }) => {
     await page.goto('/sign-in');
-    await page.getByRole('textbox', { name: '仕事用メールアドレス' }).fill('someone@unconfigured.example');
-    await page.getByRole('button', { name: /SSOで続行/ }).click();
-    await expect(page.getByText(/このドメイン向けのSSOは設定されていません/)).toBeVisible();
+    await page.getByRole('textbox', { name: 'メールアドレス' }).fill('someone@unconfigured.example');
+    await page.getByRole('button', { name: '次へ', exact: true }).click();
+    await expect(page.getByText('このメールアドレスのアカウントが見つかりませんでした')).toBeVisible();
   });
 });

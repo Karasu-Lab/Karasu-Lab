@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket, faUserPlus } from '@fortawesome/free-solid-svg-icons';
@@ -16,6 +16,8 @@ export interface EmailPasswordFormProps {
   onSuccess: (redirectUrl?: string) => void;
   /** Disables all inputs and buttons, e.g. while the caller's session state hasn't loaded yet. Defaults to `false`. */
   disabled?: boolean;
+  /** Called with the current email address whenever it changes, so the surrounding card can react to it. */
+  onEmailChange?: (email: string) => void;
 }
 
 /**
@@ -23,13 +25,17 @@ export interface EmailPasswordFormProps {
  * creation against better-auth. Both tabs share the same email and password
  * state so the user can fill in credentials once and choose the action.
  */
-export function EmailPasswordForm({ onSuccess, disabled = false }: EmailPasswordFormProps) {
+export function EmailPasswordForm({ onSuccess, disabled = false, onEmailChange }: EmailPasswordFormProps) {
   const t = useTranslations();
   const [tab, setTab] = useState('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    onEmailChange?.(email);
+  }, [email, onEmailChange]);
 
   const activeIndex = tab === 'signin' ? 0 : 1;
   const registerDisabled = disabled || loading || !email || !password || !agreedToTerms;

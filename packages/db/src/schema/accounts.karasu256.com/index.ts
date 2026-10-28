@@ -18,3 +18,4 @@ export { oauthClients, type OAuthClient, type NewOAuthClient } from '../oauth-cl
 export { oauthRefreshTokens, type OAuthRefreshToken, type NewOAuthRefreshToken } from '../oauth-refresh-tokens';
 export { oauthAccessTokens, type OAuthAccessToken, type NewOAuthAccessToken } from '../oauth-access-tokens';
 export { oauthConsents, type OAuthConsent, type NewOAuthConsent } from '../oauth-consents';
+export { ssoProviders, type SsoProvider, type NewSsoProvider } from '../sso-providers';

@@ -1,0 +1,22 @@
+{
+  "buildCommand": "cd ../.. && pnpm turbo build --filter=sso.karasu256.com",
+  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+  "build": {
+    "env": {
+      "ENABLE_EXPERIMENTAL_COREPACK": "1"
+    }
+  },
+  "git": {
+    "deploymentEnabled": {
+      "**": false,
+      "main": true,
+      "dev": true,
+      "feat/**": true,
+      "fix/**": true,
+      "claude/**": true,
+      "chore/**": true,
+      "docs/**": true,
+      "refactor/**": true
+    }
+  }
+}

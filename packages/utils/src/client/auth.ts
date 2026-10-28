@@ -1,6 +1,7 @@
 import { createAuthClient } from 'better-auth/react';
 import { oauthProviderClient } from '@better-auth/oauth-provider/client';
 import { passkeyClient } from '@better-auth/passkey/client';
+import { ssoClient } from '@better-auth/sso/client';
 import { multiSessionClient } from 'better-auth/client/plugins';
 
 /**
@@ -16,9 +17,9 @@ export interface CreateAppAuthClientOptions {
 }
 
 /**
- * Creates a better-auth client configured with the `oauthProviderClient`
- * plugin, plus a helper to bridge a Firebase session into a better-auth
- * session.
+ * Creates a better-auth client configured with the `oauthProviderClient`,
+ * `passkeyClient` and `ssoClient` plugins, plus a helper to bridge a
+ * Firebase session into a better-auth session.
  *
  * The monorepo's single better-auth instance only lives on the auth app
  * (`auth.karasu256.com`); Firebase is the source of truth for a user's
@@ -33,7 +34,7 @@ export function createAppAuthClient(options: CreateAppAuthClientOptions = {}) {
 
   const authClient = createAuthClient({
     baseURL,
-    plugins: [oauthProviderClient(), multiSessionClient(), passkeyClient()],
+    plugins: [oauthProviderClient(), multiSessionClient(), passkeyClient(), ssoClient()],
   });
 
   /**

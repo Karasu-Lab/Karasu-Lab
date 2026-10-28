@@ -5,3 +5,12 @@
 html {
   font-size: 150%;
 }
+
+@keyframes sign-in-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}

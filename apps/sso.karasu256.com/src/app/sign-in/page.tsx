@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { SamlConnectionInfo } from '@/components/sso/saml-connection-info';
-import { SsoSignInCard } from '@/components/sso/sso-sign-in-card';
+import { SignInFlow } from '@/components/sso/sign-in-flow';
 import { getContinueTo } from '@/lib/redirect-server';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -22,7 +22,7 @@ export default async function SignInPage({ searchParams }: Props) {
   const params = await searchParams;
   return (
     <main className="flex flex-1 flex-col items-center justify-center gap-6 p-4">
-      <SsoSignInCard continueTo={getContinueTo(params)} forceLogin={params.prompt === 'login'} errorCode={first(params.error)} />
+      <SignInFlow continueTo={getContinueTo(params)} forceLogin={params.prompt === 'login'} errorCode={first(params.error)} />
       <SamlConnectionInfo />
     </main>
   );

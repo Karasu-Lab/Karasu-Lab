@@ -1,11 +1,28 @@
 {
   "Metadata": {
-    "signIn": { "title": "使用 SSO 登录" },
+    "signIn": { "title": "登录" },
     "signOut": { "title": "正在退出登录" },
     "siteDescription": "Karasu Lab 单点登录",
     "siteTitle": "Karasu Lab"
   },
   "settings": { "signingOut": "正在退出登录" },
+  "signIn": {
+    "addAccount": "添加账号",
+    "chooser": { "description": "请选择要继续使用的账号", "title": "选择账号" },
+    "email": "邮箱地址",
+    "emailDescription": "请输入邮箱地址。如果该域名已配置 SSO,将跳转到所属组织的身份提供商 (IdP)。",
+    "error": {
+      "accountNotFound": "未找到使用此邮箱地址的账号",
+      "invalidPassword": "密码不正确。请重试",
+      "noPassword": "此账号无法使用密码登录。请使用已注册的其他方式登录",
+      "unknown": "登录失败。请重试"
+    },
+    "login": "登录",
+    "next": "下一步",
+    "password": "密码",
+    "passwordTitle": "输入密码",
+    "title": "登录"
+  },
   "sso": {
     "connection": {
       "acsUrl": "ACS URL(SAML 响应的发送地址)",
@@ -16,20 +33,12 @@
       "metadataUrl": "SP 元数据 URL",
       "title": "SAML 连接信息"
     },
-    "description": "输入工作邮箱后,将跳转到所属组织的身份提供商 (IdP)。密码在组织一侧输入,而不是在 Karasu Lab 输入。",
-    "email": "工作邮箱",
-    "emailHint": "将根据邮箱域名确定要连接的 IdP",
     "error": {
       "invalid_saml_response": "无法验证 SSO 响应。请重试。",
       "provider_not_found": "尚未为此域名配置 SSO。请联系组织管理员,或使用其他方式登录。",
       "replay_detected": "此 SSO 响应已被使用。请重新登录。",
       "unknown": "SSO 登录失败。请重试。",
       "unsolicited_response": "不允许从 IdP 一侧发起 SSO。"
-    },
-    "or": "或",
-    "signingIn": "正在跳转到 IdP",
-    "submit": "使用 SSO 继续",
-    "title": "使用组织的 SSO 登录",
-    "usePassword": "使用邮箱和密码登录"
+    }
   }
 }

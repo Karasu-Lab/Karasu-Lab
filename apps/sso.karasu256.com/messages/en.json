@@ -1,11 +1,28 @@
 {
   "Metadata": {
-    "signIn": { "title": "Sign in with SSO" },
+    "signIn": { "title": "Sign in" },
     "signOut": { "title": "Signing out" },
     "siteDescription": "Single sign-on for Karasu Lab",
     "siteTitle": "Karasu Lab"
   },
   "settings": { "signingOut": "Signing out" },
+  "signIn": {
+    "addAccount": "Add an account",
+    "chooser": { "description": "Choose an account to continue", "title": "Choose an account" },
+    "email": "Email address",
+    "emailDescription": "Enter your email address. If SSO is configured for its domain, you will be taken to your organization's identity provider (IdP).",
+    "error": {
+      "accountNotFound": "No account was found for this email address",
+      "invalidPassword": "The password is incorrect. Please try again",
+      "noPassword": "This account cannot sign in with a password. Please use another method you registered",
+      "unknown": "Sign-in failed. Please try again"
+    },
+    "login": "Sign in",
+    "next": "Next",
+    "password": "Password",
+    "passwordTitle": "Enter your password",
+    "title": "Sign in"
+  },
   "sso": {
     "connection": {
       "acsUrl": "ACS URL (where SAML responses are posted)",
@@ -16,20 +33,12 @@
       "metadataUrl": "SP metadata URL",
       "title": "SAML connection information"
     },
-    "description": "Enter your work email address and you will be taken to your organization's identity provider (IdP). You enter your password there, not on Karasu Lab.",
-    "email": "Work email address",
-    "emailHint": "The email domain decides which IdP you are sent to",
     "error": {
       "invalid_saml_response": "The SSO response could not be verified. Please try again.",
       "provider_not_found": "SSO is not configured for this domain. Check with your organization's administrator, or sign in another way.",
       "replay_detected": "This SSO response has already been used. Please sign in again.",
       "unknown": "SSO sign-in failed. Please try again.",
       "unsolicited_response": "IdP-initiated SSO is not allowed."
-    },
-    "or": "or",
-    "signingIn": "Taking you to your IdP",
-    "submit": "Continue with SSO",
-    "title": "Sign in with your organization's SSO",
-    "usePassword": "Sign in with email and password"
+    }
   }
 }

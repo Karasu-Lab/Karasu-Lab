@@ -85,6 +85,28 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
     toast.error(t(known ? `sso.error.${errorCode}` : 'sso.error.unknown'));
   }, [errorCode, t]);
 
+  // While the email field is on screen, offer passkeys through the
+  // browser's autofill (WebAuthn conditional mediation): picking one from
+  // the field's suggestions signs in right away. Cancellation — including
+  // the browser superseding this request with a modal ceremony — is
+  // expected and stays silent.
+  useEffect(() => {
+    if (step !== 'email') return;
+    let cancelled = false;
+    void (async () => {
+      const credentialApi = window.PublicKeyCredential as
+        | (typeof PublicKeyCredential & { isConditionalMediationAvailable?: () => Promise<boolean> })
+        | undefined;
+      if (!credentialApi?.isConditionalMediationAvailable || !(await credentialApi.isConditionalMediationAvailable())) return;
+      const { data, error } = await authClient.signIn.passkey({ autoFill: true });
+      if (cancelled || error || !data) return;
+      window.location.replace(continueTo);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [step, continueTo]);
+
   async function selectAccount(entry: DeviceSessionEntry) {
     setBusy(true);
     const { error } = await authClient.multiSession.setActive({ sessionToken: entry.session.token });
@@ -254,7 +276,7 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
                       id="sign-in-email"
                       name="email"
                       type="email"
-                      autoComplete="email"
+                      autoComplete="email webauthn"
                       value={email}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                       required

@@ -11,6 +11,8 @@ ingress:
     service: http://localhost:3003
   - hostname: local-auth.karasu256.com
     service: http://localhost:3004
+  - hostname: local-sso.karasu256.com
+    service: http://localhost:3007
   - hostname: local-me.karasu256.com
     service: http://localhost:3005
   - hostname: local-api-admin.karasu256.com

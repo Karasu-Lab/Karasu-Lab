@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ChevronLeft, Fingerprint, KeyRound, LoaderCircle, LockKeyhole, Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { Button, Input, Label, UserAvatar, toast } from '@Hashibutogarasu/ui';
+import { Button, Input, Label, SlideStep, SlideSteps, UserAvatar, toast } from '@Hashibutogarasu/ui';
 import { authClient } from '@/lib/auth/client';
 import { lookupSignIn, type SignInLookup } from '@/lib/sign-in-lookup';
 import { SamlConnectionInfoDialog } from './saml-connection-info';
@@ -276,9 +276,9 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
               </div>
             </div>
           ) : (
-            <div className="overflow-hidden">
-              <div className="flex transition-transform duration-300 ease-in-out" style={{ transform: `translateX(-${formStepIndex * 100}%)` }}>
-                <form onSubmit={handleEmailSubmit} className="w-full shrink-0" aria-hidden={step !== 'email'}>
+            <SlideSteps index={formStepIndex}>
+              <SlideStep aria-hidden={step !== 'email'}>
+                <form onSubmit={handleEmailSubmit}>
                   <h1 className="text-lg font-semibold">{t('signIn.title')}</h1>
                   <p className="mt-1 text-sm text-muted-foreground">{t('signIn.emailDescription')}</p>
                   <div className="mt-6 space-y-2">
@@ -287,11 +287,13 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
                       id="sign-in-email"
                       name="email"
                       type="email"
-                      autoComplete="email webauthn"
+                      autoComplete="username webauthn"
                       value={email}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                       required
-                      disabled={busy || step !== 'email'}
+                      disabled={busy}
+                      readOnly={step !== 'email'}
+                      tabIndex={step === 'email' ? undefined : -1}
                     />
                     {emailError && <p className="text-sm text-destructive">{emailError}</p>}
                   </div>
@@ -301,8 +303,10 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
                     </Button>
                   </div>
                 </form>
+              </SlideStep>
 
-                <div className="w-full shrink-0" aria-hidden={step !== 'passkey'}>
+              <SlideStep aria-hidden={step !== 'passkey'}>
+                <div>
                   {emailChip(busy || step !== 'passkey')}
                   <div className="mt-4 flex flex-col items-center text-center">
                     <span className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
@@ -331,8 +335,10 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
                     </button>
                   </div>
                 </div>
+              </SlideStep>
 
-                <div className="w-full shrink-0" aria-hidden={step !== 'methods'}>
+              <SlideStep aria-hidden={step !== 'methods'}>
+                <div>
                   {emailChip(busy || step !== 'methods')}
                   <h1 className="mt-2 text-lg font-semibold">{t('signIn.methods.title')}</h1>
                   {methodsExpanded ? (
@@ -359,8 +365,25 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
                     </div>
                   )}
                 </div>
+              </SlideStep>
 
-                <form onSubmit={handlePasswordSubmit} className="w-full shrink-0" aria-hidden={step !== 'password'}>
+              <SlideStep aria-hidden={step !== 'password'}>
+                <form onSubmit={handlePasswordSubmit} className="relative">
+                  {/* Password managers key a saved credential to the username
+                      field of the same form. The steps are split, so the
+                      password form carries a visually hidden mirror of the
+                      entered address — read-only and rendered (disabled or
+                      display:none fields are ignored by autofill). */}
+                  <input
+                    type="text"
+                    name="username"
+                    autoComplete="username"
+                    value={email}
+                    readOnly
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    className="pointer-events-none absolute h-px w-px opacity-0"
+                  />
                   {emailChip(busy || step !== 'password')}
                   <h1 className="mt-2 text-lg font-semibold">{t('signIn.passwordTitle')}</h1>
                   <div className="mt-6 space-y-2">
@@ -383,8 +406,8 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
                     </Button>
                   </div>
                 </form>
-              </div>
-            </div>
+              </SlideStep>
+            </SlideSteps>
           )}
         </div>
       </div>

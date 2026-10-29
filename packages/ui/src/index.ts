@@ -5,6 +5,7 @@ export { Collapsible, CollapsibleTrigger, CollapsiblePanel, CollapsibleChevron }
 export { AnimatedList, AnimatedListItem } from './components/animated-list';
 export { AnimatedPanel } from './components/animated-panel';
 export { AnimatedHeight } from './components/animated-height';
+export { SlideSteps, SlideStep } from './components/slide-steps';
 export { Dialog, DialogPortal, DialogBackdrop, DialogPopup, DialogTitle, DialogClose } from './components/dialog';
 export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent } from './components/card';
 export { Input } from './components/input';

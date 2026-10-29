@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Button, Input, Label, UserAvatar, toast } from '@Hashibutogarasu/ui';
 import { authClient } from '@/lib/auth/client';
 import { lookupSignIn, type SignInLookup } from '@/lib/sign-in-lookup';
+import { SamlConnectionInfoDialog } from './saml-connection-info';
 
 export interface SignInFlowProps {
   continueTo: string;
@@ -212,6 +213,8 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
   return (
     <div className="relative w-full max-w-3xl overflow-hidden rounded-xl bg-card text-sm text-card-foreground shadow-sm ring-1 ring-foreground/10">
       <ProgressBar active={busy} />
+      {/* On mobile layouts there is no landing area, so the SAML connection info button anchors to the container instead of the page. */}
+      <SamlConnectionInfoDialog placement="container" />
       <div className="flex">
         <div className="hidden w-[30%] shrink-0 items-center justify-center bg-muted/60 sm:flex" aria-hidden>
           <div className="flex h-24 w-24 items-center justify-center rounded-full bg-background shadow-sm ring-1 ring-foreground/10">

@@ -1,8 +1,0 @@
-server:
-  port: 3006
-  corsOrigin: 'http://localhost:3003'
-
-docker:
-  socket:
-    win32: '//./pipe/docker_engine'
-    default: '/var/run/docker.sock'

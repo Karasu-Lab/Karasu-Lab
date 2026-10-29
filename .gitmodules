@@ -10,3 +10,79 @@
 	path = apps/me.karasu256.com
 	url = https://github.com/Karasu-Lab/me.karasu256.com.git
 	branch = main
+[submodule "apps/accounts.karasu256.com"]
+	path = apps/accounts.karasu256.com
+	url = https://github.com/Karasu-Lab/accounts.karasu256.com.git
+	branch = main
+[submodule "apps/admin.karasu256.com"]
+	path = apps/admin.karasu256.com
+	url = https://github.com/Karasu-Lab/admin.karasu256.com.git
+	branch = main
+[submodule "apps/android-native"]
+	path = apps/android-native
+	url = https://github.com/Karasu-Lab/android-native.git
+	branch = main
+[submodule "apps/api.admin.karasu256.com"]
+	path = apps/api.admin.karasu256.com
+	url = https://github.com/Karasu-Lab/api.admin.karasu256.com.git
+	branch = main
+[submodule "apps/api.karasu256.com"]
+	path = apps/api.karasu256.com
+	url = https://github.com/Karasu-Lab/api.karasu256.com.git
+	branch = main
+[submodule "apps/auth.karasu256.com"]
+	path = apps/auth.karasu256.com
+	url = https://github.com/Karasu-Lab/auth.karasu256.com.git
+	branch = main
+[submodule "apps/cdn.karasu256.com"]
+	path = apps/cdn.karasu256.com
+	url = https://github.com/Karasu-Lab/cdn.karasu256.com.git
+	branch = main
+[submodule "apps/cloudflared-config"]
+	path = apps/cloudflared-config
+	url = https://github.com/Karasu-Lab/cloudflared-config.git
+	branch = main
+[submodule "apps/cron-jobs"]
+	path = apps/cron-jobs
+	url = https://github.com/Karasu-Lab/cron-jobs.git
+	branch = main
+[submodule "apps/karasu256.com"]
+	path = apps/karasu256.com
+	url = https://github.com/Karasu-Lab/www.karasu256.com.git
+	branch = main
+[submodule "apps/qr.karasu256.com"]
+	path = apps/qr.karasu256.com
+	url = https://github.com/Karasu-Lab/qr.karasu256.com.git
+	branch = main
+[submodule "apps/sso.karasu256.com"]
+	path = apps/sso.karasu256.com
+	url = https://github.com/Karasu-Lab/sso.karasu256.com.git
+	branch = main
+[submodule "packages/api-permissions"]
+	path = packages/api-permissions
+	url = https://github.com/Karasu-Lab/api-permissions-package.git
+	branch = main
+[submodule "packages/challengetoken"]
+	path = packages/challengetoken
+	url = https://github.com/Karasu-Lab/challengetoken-package.git
+	branch = main
+[submodule "packages/db"]
+	path = packages/db
+	url = https://github.com/Karasu-Lab/db-package.git
+	branch = main
+[submodule "packages/docker"]
+	path = packages/docker
+	url = https://github.com/Karasu-Lab/docker-package.git
+	branch = main
+[submodule "packages/flags"]
+	path = packages/flags
+	url = https://github.com/Karasu-Lab/flags-package.git
+	branch = main
+[submodule "packages/types"]
+	path = packages/types
+	url = https://github.com/Karasu-Lab/types-package.git
+	branch = main
+[submodule "packages/utils"]
+	path = packages/utils
+	url = https://github.com/Karasu-Lab/utils-package.git
+	branch = main

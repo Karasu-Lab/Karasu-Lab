@@ -15,6 +15,8 @@ export const oauthConsents = pgTable(
       .references(() => oauthClients.clientId, { onDelete: 'cascade' }),
     userId: varchar('user_id', { length: 128 }).references(() => users.id, { onDelete: 'cascade' }),
     referenceId: text('reference_id'),
+    resources: text('resources').array(),
+    requestedUserInfoClaims: text('requested_user_info_claims').array(),
     scopes: text('scopes').array().notNull(),
     createdAt: timestamp('created_at'),
     updatedAt: timestamp('updated_at'),

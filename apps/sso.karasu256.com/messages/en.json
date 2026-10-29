@@ -26,7 +26,9 @@
       "unknown": "Sign-in failed. Please try again",
       "noMethod": "This account has neither a password nor a passkey set. Please use another method you registered",
       "passkeyFailed": "Passkey sign-in failed. Please try again",
-      "passkeyMismatch": "The passkey used belongs to a different account than the email address entered"
+      "passkeyMismatch": "The passkey used belongs to a different account than the email address entered",
+      "rateLimitedWithin": "Rate limit reached. Please try again within {minutes} minute(s)",
+      "rateLimitedLessThan": "Rate limit reached. Please try again in less than {minutes} minute(s)"
     },
     "login": "Sign in",
     "next": "Next",

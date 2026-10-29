@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Button, Input, Label, UserAvatar, toast } from '@Hashibutogarasu/ui';
 import { authClient } from '@/lib/auth/client';
 import { lookupSignIn, type SignInLookup } from '@/lib/sign-in-lookup';
+import { SamlConnectionInfoDialog } from './saml-connection-info';
 
 export interface SignInFlowProps {
   continueTo: string;
@@ -129,27 +130,35 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
     setPassword('');
     try {
       const result = await lookupSignIn(email);
-      setLookup(result);
-      if (result.sso) {
-        const { data, error } = await authClient.signIn.sso({ email, callbackURL: continueTo });
-        const url = (data as { url?: string } | null)?.url;
-        if (!error && url) {
-          window.location.replace(url);
-          return;
-        }
-        setEmailError(t('sso.error.provider_not_found'));
-      } else if (!result.exists) {
+      if (result.status === 'rate_limited') {
+        setEmailError(
+          result.retryAfterExact
+            ? t('signIn.error.rateLimitedWithin', { minutes: result.retryAfterMinutes })
+            : t('signIn.error.rateLimitedLessThan', { minutes: result.retryAfterMinutes })
+        );
+      } else if (result.status === 'not_found') {
         setEmailError(t('signIn.error.accountNotFound'));
-      } else if (result.hasPasskey) {
-        // A registered passkey is always asked for before anything else.
-        setStep('passkey');
-      } else if (result.hasPassword) {
-        // Without a passkey, the password field is reached by explicitly
-        // choosing it under "another way" on the methods step.
-        setMethodsExpanded(false);
-        setStep('methods');
       } else {
-        setEmailError(t('signIn.error.noMethod'));
+        setLookup(result.lookup);
+        if (result.lookup.sso) {
+          const { data, error } = await authClient.signIn.sso({ email, callbackURL: continueTo });
+          const url = (data as { url?: string } | null)?.url;
+          if (!error && url) {
+            window.location.replace(url);
+            return;
+          }
+          setEmailError(t('sso.error.provider_not_found'));
+        } else if (result.lookup.hasPasskey) {
+          // A registered passkey is always asked for before anything else.
+          setStep('passkey');
+        } else if (result.lookup.hasPassword) {
+          // Without a passkey, the password field is reached by explicitly
+          // choosing it under "another way" on the methods step.
+          setMethodsExpanded(false);
+          setStep('methods');
+        } else {
+          setEmailError(t('signIn.error.noMethod'));
+        }
       }
     } catch {
       setEmailError(t('signIn.error.unknown'));
@@ -212,6 +221,8 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
   return (
     <div className="relative w-full max-w-3xl overflow-hidden rounded-xl bg-card text-sm text-card-foreground shadow-sm ring-1 ring-foreground/10">
       <ProgressBar active={busy} />
+      {/* On mobile layouts there is no landing area, so the SAML connection info button anchors to the container instead of the page. */}
+      <SamlConnectionInfoDialog placement="container" />
       <div className="flex">
         <div className="hidden w-[30%] shrink-0 items-center justify-center bg-muted/60 sm:flex" aria-hidden>
           <div className="flex h-24 w-24 items-center justify-center rounded-full bg-background shadow-sm ring-1 ring-foreground/10">

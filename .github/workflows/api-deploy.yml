@@ -2,9 +2,6 @@ name: api.karasu256.com Deploy
 
 on:
   push:
-    branches:
-      - main
-      - dev
 
 concurrency:
   group: api-deploy-${{ github.ref_name }}
@@ -31,8 +28,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Deploy worker
+      - name: Deploy to production
+        if: github.ref_name == 'main'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-        run: pnpm --filter api.karasu256.com ${{ github.ref_name == 'main' && 'deploy' || 'deploy:preview' }}
+        run: pnpm --filter api.karasu256.com deploy
+
+      - name: Create or update the branch preview
+        if: github.ref_name != 'main'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: pnpm --filter api.karasu256.com preview -- --name "${{ github.ref_name }}" --var "GIT_BRANCH:${{ github.ref_name }}"

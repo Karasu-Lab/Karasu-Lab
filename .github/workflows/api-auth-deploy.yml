@@ -2,9 +2,7 @@ name: api-auth.karasu256.com Deploy
 
 on:
   push:
-    branches:
-      - main
-      - dev
+  workflow_dispatch:
 
 concurrency:
   group: api-auth-deploy-${{ github.ref_name }}
@@ -31,8 +29,55 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Deploy worker
+      - name: Deploy to production
+        if: github.ref_name == 'main'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-        run: pnpm --filter api-auth.karasu256.com ${{ github.ref_name == 'main' && 'deploy' || 'deploy:preview' }}
+        run: pnpm --filter api-auth.karasu256.com deploy
+
+      - name: Sync worker secrets
+        if: github.ref_name == 'main'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          INTERNAL_API_SECRET: ${{ secrets.INTERNAL_API_SECRET }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          FIREBASE_ADMIN_PROJECT_ID: ${{ secrets.FIREBASE_ADMIN_PROJECT_ID }}
+          FIREBASE_ADMIN_CLIENT_EMAIL: ${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
+          FIREBASE_ADMIN_PRIVATE_KEY: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_FROM_EMAIL: ${{ secrets.RESEND_FROM_EMAIL }}
+          NEON_AUTH_BASE_URL: ${{ secrets.NEON_AUTH_BASE_URL }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GITHUB_CLIENT_ID: ${{ secrets.GH_CLIENT_ID }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.GH_CLIENT_SECRET }}
+        run: |
+          node .github/scripts/worker-secrets-file.mjs apps/api-auth.karasu256.com "$RUNNER_TEMP/api-auth-secrets.json" BETTER_AUTH_SECRET AUTH_SECRET INTERNAL_API_SECRET DATABASE_URL FIREBASE_ADMIN_PROJECT_ID FIREBASE_ADMIN_CLIENT_EMAIL FIREBASE_ADMIN_PRIVATE_KEY RESEND_API_KEY RESEND_FROM_EMAIL NEON_AUTH_BASE_URL GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET GITHUB_CLIENT_ID GITHUB_CLIENT_SECRET
+          pnpm --filter api-auth.karasu256.com exec wrangler secret bulk "$RUNNER_TEMP/api-auth-secrets.json"
+
+      - name: Create or update the branch preview
+        if: github.ref_name != 'main'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          BETTER_AUTH_SECRET: ${{ secrets.PREVIEW_BETTER_AUTH_SECRET }}
+          AUTH_SECRET: ${{ secrets.PREVIEW_AUTH_SECRET }}
+          INTERNAL_API_SECRET: ${{ secrets.PREVIEW_INTERNAL_API_SECRET }}
+          DATABASE_URL: ${{ secrets.PREVIEW_DATABASE_URL }}
+          FIREBASE_ADMIN_PROJECT_ID: ${{ secrets.PREVIEW_FIREBASE_ADMIN_PROJECT_ID }}
+          FIREBASE_ADMIN_CLIENT_EMAIL: ${{ secrets.PREVIEW_FIREBASE_ADMIN_CLIENT_EMAIL }}
+          FIREBASE_ADMIN_PRIVATE_KEY: ${{ secrets.PREVIEW_FIREBASE_ADMIN_PRIVATE_KEY }}
+          RESEND_API_KEY: ${{ secrets.PREVIEW_RESEND_API_KEY }}
+          RESEND_FROM_EMAIL: ${{ secrets.PREVIEW_RESEND_FROM_EMAIL }}
+          NEON_AUTH_BASE_URL: ${{ secrets.PREVIEW_NEON_AUTH_BASE_URL }}
+          GOOGLE_CLIENT_ID: ${{ secrets.PREVIEW_GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.PREVIEW_GOOGLE_CLIENT_SECRET }}
+          GITHUB_CLIENT_ID: ${{ secrets.PREVIEW_GH_CLIENT_ID }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.PREVIEW_GH_CLIENT_SECRET }}
+        run: |
+          node .github/scripts/worker-secrets-file.mjs apps/api-auth.karasu256.com "$RUNNER_TEMP/api-auth-preview-secrets.json" BETTER_AUTH_SECRET AUTH_SECRET INTERNAL_API_SECRET DATABASE_URL FIREBASE_ADMIN_PROJECT_ID FIREBASE_ADMIN_CLIENT_EMAIL FIREBASE_ADMIN_PRIVATE_KEY RESEND_API_KEY RESEND_FROM_EMAIL NEON_AUTH_BASE_URL GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET GITHUB_CLIENT_ID GITHUB_CLIENT_SECRET
+          pnpm --filter api-auth.karasu256.com preview -- --name "${{ github.ref_name }}" --secrets-file "$RUNNER_TEMP/api-auth-preview-secrets.json"

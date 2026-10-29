@@ -36,6 +36,13 @@
       "when": 1793239103902,
       "tag": "0004_silly_grandmaster",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1793241142480,
+      "tag": "0005_odd_avengers",
+      "breakpoints": true
     }
   ]
 }

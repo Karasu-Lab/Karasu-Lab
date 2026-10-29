@@ -22,7 +22,7 @@ export default async function SignInPage({ searchParams }: Props) {
   const params = await searchParams;
   return (
     <main className="relative flex flex-1 flex-col items-center justify-center gap-6 p-4">
-      <SamlConnectionInfoDialog />
+      <SamlConnectionInfoDialog placement="page" />
       <SignInFlow continueTo={getContinueTo(params)} forceLogin={params.prompt === 'login'} errorCode={first(params.error)} />
     </main>
   );

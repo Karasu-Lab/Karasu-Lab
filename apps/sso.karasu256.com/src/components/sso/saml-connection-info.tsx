@@ -39,17 +39,32 @@ function ConnectionField({ label, value }: ConnectionFieldProps) {
   );
 }
 
+export interface SamlConnectionInfoDialogProps {
+  /**
+   * Where the trigger button is anchored. `page` pins it to the top-right of
+   * the sign-in page's landing area on `sm` and wider layouts; `container`
+   * pins it to the top-right of the sign-in container on smaller layouts,
+   * which have no landing area (the key panel is hidden there).
+   */
+  placement: 'page' | 'container';
+}
+
 /**
  * Publishes the SAML 2.0 Service Provider connection information for
- * identity provider administrators, behind a round info icon button pinned
- * to the top-right of the sign-in page. The values are only needed while an
- * IdP connection is being set up, so they stay out of the way of the
- * sign-in flow itself and open in a dialog on demand.
+ * identity provider administrators, behind a round info icon button. The
+ * values are only needed while an IdP connection is being set up, so they
+ * stay out of the way of the sign-in flow itself and open in a dialog on
+ * demand.
  */
-export function SamlConnectionInfoDialog() {
+export function SamlConnectionInfoDialog({ placement }: SamlConnectionInfoDialogProps) {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
   const info = getSamlConnectionInfo(process.env.NEXT_PUBLIC_AUTH_API_URL ?? '');
+
+  const triggerClassName =
+    placement === 'page'
+      ? 'absolute top-4 right-4 hidden size-10 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none sm:inline-flex'
+      : 'absolute top-3 right-3 z-20 inline-flex size-10 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none sm:hidden';
 
   return (
     <>
@@ -58,7 +73,7 @@ export function SamlConnectionInfoDialog() {
         onClick={() => setOpen(true)}
         aria-label={t('sso.connection.title')}
         title={t('sso.connection.title')}
-        className="absolute top-4 right-4 inline-flex size-10 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        className={triggerClassName}
       >
         <AiOutlineInfoCircle className="size-6" aria-hidden />
       </button>

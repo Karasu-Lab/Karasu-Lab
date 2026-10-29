@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { Button, Container, CardContent, CardHeader, toast } from '@Hashibutogarasu/ui';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { Button, Dialog, DialogBackdrop, DialogPopup, DialogPortal, DialogTitle, toast } from '@Hashibutogarasu/ui';
 import { getSamlConnectionInfo } from '@/lib/saml';
 
 interface ConnectionFieldProps {
@@ -40,23 +41,41 @@ function ConnectionField({ label, value }: ConnectionFieldProps) {
 
 /**
  * Publishes the SAML 2.0 Service Provider connection information for
- * identity provider administrators. This card is why sso.karasu256.com
- * exists as its own site: the values live here, next to the SSO sign-in
- * flow they belong to, instead of being exchanged out of band.
+ * identity provider administrators, behind a round info icon button pinned
+ * to the top-right of the sign-in page. The values are only needed while an
+ * IdP connection is being set up, so they stay out of the way of the
+ * sign-in flow itself and open in a dialog on demand.
  */
-export function SamlConnectionInfo() {
+export function SamlConnectionInfoDialog() {
   const t = useTranslations();
+  const [open, setOpen] = useState(false);
   const info = getSamlConnectionInfo(process.env.NEXT_PUBLIC_AUTH_API_URL ?? '');
 
   return (
-    <Container className="max-w-sm">
-      <CardHeader className="text-lg font-semibold">{t('sso.connection.title')}</CardHeader>
-      <CardContent className="space-y-4">
-        <p className="text-sm text-muted-foreground">{t('sso.connection.description')}</p>
-        <ConnectionField label={t('sso.connection.metadataUrl')} value={info.metadataUrl} />
-        <ConnectionField label={t('sso.connection.acsUrl')} value={info.acsUrl} />
-        <ConnectionField label={t('sso.connection.entityId')} value={info.entityId} />
-      </CardContent>
-    </Container>
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        aria-label={t('sso.connection.title')}
+        title={t('sso.connection.title')}
+        className="absolute top-4 right-4 inline-flex size-10 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+      >
+        <AiOutlineInfoCircle className="size-6" aria-hidden />
+      </button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogPortal>
+          <DialogBackdrop />
+          <DialogPopup className="max-w-md">
+            <DialogTitle>{t('sso.connection.title')}</DialogTitle>
+            <div className="space-y-4">
+              <p className="text-sm text-muted-foreground">{t('sso.connection.description')}</p>
+              <ConnectionField label={t('sso.connection.metadataUrl')} value={info.metadataUrl} />
+              <ConnectionField label={t('sso.connection.acsUrl')} value={info.acsUrl} />
+              <ConnectionField label={t('sso.connection.entityId')} value={info.entityId} />
+            </div>
+          </DialogPopup>
+        </DialogPortal>
+      </Dialog>
+    </>
   );
 }

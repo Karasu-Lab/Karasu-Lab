@@ -1,0 +1,41 @@
+name: accounts.karasu256.com Production Migrations
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - apps/accounts.karasu256.com/drizzle/migrations/**
+      - .github/workflows/accounts-production-migrate.yml
+  workflow_dispatch:
+
+concurrency:
+  group: accounts-production-migrate
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Apply migrations to the production database
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: pnpm --filter accounts.karasu256.com db:migrate:deploy

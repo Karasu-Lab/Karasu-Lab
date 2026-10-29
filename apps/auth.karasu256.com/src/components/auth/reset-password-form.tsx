@@ -25,7 +25,10 @@ export function ResetPasswordForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    const { error } = await authClient.requestPasswordReset({ email, redirectTo: '/reset-password/confirm' });
+    // The redirectTo must be absolute: the auth API resolves a relative
+    // path against its own origin when it redirects after verifying the
+    // token, which lands the user on the API host instead of this page.
+    const { error } = await authClient.requestPasswordReset({ email, redirectTo: `${window.location.origin}/reset-password/confirm` });
     if (error) {
       toast.error(error.message ?? t('resetPassword.title'));
     } else {

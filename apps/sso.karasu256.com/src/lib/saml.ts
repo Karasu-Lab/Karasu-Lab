@@ -7,7 +7,12 @@
  * plugin serves the SP metadata document and the assertion consumer
  * service. `{providerId}` is a literal placeholder, because each registered
  * SSO provider has its own ID (and therefore its own ACS URL).
+ *
+ * The published values are always absolute URLs: a bare path does not tell
+ * an IdP administrator which host serves it, so when the auth API URL is
+ * not configured the production api-auth origin is assumed.
  */
+const DEFAULT_AUTH_API_URL = 'https://api-auth.karasu256.com';
 export interface SamlConnectionInfo {
   /** SP metadata document URL, with the provider's ID as a query parameter. */
   metadataUrl: string;
@@ -18,7 +23,8 @@ export interface SamlConnectionInfo {
 }
 
 export function getSamlConnectionInfo(authApiUrl: string): SamlConnectionInfo {
-  const base = `${authApiUrl.replace(/\/+$/, '')}/api/auth`;
+  const origin = authApiUrl.trim() === '' ? DEFAULT_AUTH_API_URL : authApiUrl.replace(/\/+$/, '');
+  const base = `${origin}/api/auth`;
   const entityId = `${base}/sso/saml2/sp/metadata`;
   return {
     metadataUrl: `${entityId}?providerId={providerId}`,

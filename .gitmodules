@@ -1,0 +1,12 @@
+[submodule "packages/ui"]
+	path = packages/ui
+	url = https://github.com/Karasu-Lab/ui-package.git
+	branch = main
+[submodule "apps/api-auth.karasu256.com"]
+	path = apps/api-auth.karasu256.com
+	url = https://github.com/Karasu-Lab/api-auth.karasu256.com.git
+	branch = main
+[submodule "apps/me.karasu256.com"]
+	path = apps/me.karasu256.com
+	url = https://github.com/Karasu-Lab/me.karasu256.com.git
+	branch = main

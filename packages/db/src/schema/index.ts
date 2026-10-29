@@ -1,4 +1,5 @@
 export { users, type User, type NewUser } from './users';
+export { firebaseUsers, type FirebaseUser, type NewFirebaseUser } from './firebase-users';
 export { apiKeys, type ApiKey, type NewApiKey } from './api-keys';
 export { permissions, type PermissionRow, type NewPermissionRow } from './permissions';
 export { apiKeyPermissions, type ApiKeyPermission, type NewApiKeyPermission } from './api-key-permissions';

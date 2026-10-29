@@ -12,7 +12,9 @@ test.describe('SSO sign-in page', () => {
     await expect(page.getByRole('button', { name: '次へ', exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'SAML接続情報' }).click();
     await expect(page.getByText('SAML接続情報')).toBeVisible();
-    await expect(page.getByText(/\/api\/auth\/sso\/saml2\/sp\/metadata/)).toBeVisible();
+    // The metadata URL specifically (with its query): the entity ID
+    // element contains the same path, so a bare path pattern matches both.
+    await expect(page.getByText(/\/api\/auth\/sso\/saml2\/sp\/metadata\?providerId=/)).toBeVisible();
     await expect(page.getByText(/\/api\/auth\/sso\/saml2\/sp\/acs\/\{providerId\}/)).toBeVisible();
   });
 

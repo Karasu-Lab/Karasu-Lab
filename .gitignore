@@ -20,6 +20,8 @@ playwright/.cache/
 # misc
 .DS_Store
 *.pem
+# Test-only SAML IdP keypair for the live e2e test; not a real credential.
+!apps/sso.karasu256.com/e2e/sso/fixtures/*.pem
 
 # debug
 npm-debug.log*

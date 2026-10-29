@@ -1197,6 +1197,9 @@ importers:
       typescript:
         specifier: ^5
         version: 5.9.3
+      xml-crypto:
+        specifier: ^6.4.0
+        version: 6.4.0
 
   packages/api-permissions:
     devDependencies:

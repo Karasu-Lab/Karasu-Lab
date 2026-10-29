@@ -26,7 +26,9 @@
       "unknown": "登录失败。请重试",
       "noMethod": "此账号既未设置密码,也未设置通行密钥。请使用已注册的其他方式登录",
       "passkeyFailed": "通行密钥登录失败。请重试",
-      "passkeyMismatch": "所使用的通行密钥属于与输入邮箱不同的账号"
+      "passkeyMismatch": "所使用的通行密钥属于与输入邮箱不同的账号",
+      "rateLimitedWithin": "已达到速率限制。请在 {minutes} 分钟内重试",
+      "rateLimitedLessThan": "已达到速率限制。请在不足 {minutes} 分钟后重试"
     },
     "login": "登录",
     "next": "下一步",

@@ -129,27 +129,35 @@ export function SignInFlow({ continueTo, errorCode }: SignInFlowProps) {
     setPassword('');
     try {
       const result = await lookupSignIn(email);
-      setLookup(result);
-      if (result.sso) {
-        const { data, error } = await authClient.signIn.sso({ email, callbackURL: continueTo });
-        const url = (data as { url?: string } | null)?.url;
-        if (!error && url) {
-          window.location.replace(url);
-          return;
-        }
-        setEmailError(t('sso.error.provider_not_found'));
-      } else if (!result.exists) {
+      if (result.status === 'rate_limited') {
+        setEmailError(
+          result.retryAfterExact
+            ? t('signIn.error.rateLimitedWithin', { minutes: result.retryAfterMinutes })
+            : t('signIn.error.rateLimitedLessThan', { minutes: result.retryAfterMinutes })
+        );
+      } else if (result.status === 'not_found') {
         setEmailError(t('signIn.error.accountNotFound'));
-      } else if (result.hasPasskey) {
-        // A registered passkey is always asked for before anything else.
-        setStep('passkey');
-      } else if (result.hasPassword) {
-        // Without a passkey, the password field is reached by explicitly
-        // choosing it under "another way" on the methods step.
-        setMethodsExpanded(false);
-        setStep('methods');
       } else {
-        setEmailError(t('signIn.error.noMethod'));
+        setLookup(result.lookup);
+        if (result.lookup.sso) {
+          const { data, error } = await authClient.signIn.sso({ email, callbackURL: continueTo });
+          const url = (data as { url?: string } | null)?.url;
+          if (!error && url) {
+            window.location.replace(url);
+            return;
+          }
+          setEmailError(t('sso.error.provider_not_found'));
+        } else if (result.lookup.hasPasskey) {
+          // A registered passkey is always asked for before anything else.
+          setStep('passkey');
+        } else if (result.lookup.hasPassword) {
+          // Without a passkey, the password field is reached by explicitly
+          // choosing it under "another way" on the methods step.
+          setMethodsExpanded(false);
+          setStep('methods');
+        } else {
+          setEmailError(t('signIn.error.noMethod'));
+        }
       }
     } catch {
       setEmailError(t('signIn.error.unknown'));

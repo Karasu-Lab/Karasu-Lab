@@ -211,11 +211,13 @@ export function SignInFlow({ continueTo, forceLogin }: SignInFlowProps) {
                     id="sign-in-email"
                     name="email"
                     type="email"
-                    autoComplete="email webauthn"
+                    autoComplete="username"
                     value={email}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                     required
-                    disabled={busy || step !== 'email'}
+                    disabled={busy}
+                    readOnly={step !== 'email'}
+                    tabIndex={step === 'email' ? undefined : -1}
                   />
                   {emailError && <p className="text-sm text-destructive">{emailError}</p>}
                 </div>
@@ -284,7 +286,22 @@ export function SignInFlow({ continueTo, forceLogin }: SignInFlowProps) {
             </SlideStep>
 
             <SlideStep aria-hidden={step !== 'password'}>
-              <form onSubmit={handlePasswordSubmit}>
+              <form onSubmit={handlePasswordSubmit} className="relative">
+                {/* Password managers key a saved credential to the username
+                    field of the same form. The steps are split, so the
+                    password form carries a visually hidden mirror of the
+                    entered address — read-only and rendered (disabled or
+                    display:none fields are ignored by autofill). */}
+                <input
+                  type="text"
+                  name="username"
+                  autoComplete="username"
+                  value={email}
+                  readOnly
+                  tabIndex={-1}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute h-px w-px opacity-0"
+                />
                 {backChip('email', busy || step !== 'password')}
                 <h1 className="mt-2 text-lg font-semibold">{t('signIn.passwordTitle')}</h1>
                 <div className="mt-6 space-y-2">

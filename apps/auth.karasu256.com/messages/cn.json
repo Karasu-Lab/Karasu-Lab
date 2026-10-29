@@ -36,7 +36,29 @@
       "user-disabled": "此账户已被禁用",
       "email-already-in-use": "此电子邮件地址已被使用",
       "weak-password": "密码太短",
-      "unknown": "发生错误，请重试。"
+      "unknown": "发生错误，请重试。",
+      "accountNotFound": "未找到使用此邮箱地址的账号",
+      "invalidPassword": "密码不正确。请重试",
+      "noMethod": "此账号既未设置密码,也未设置通行密钥。请使用已注册的其他方式登录",
+      "passkeyFailed": "通行密钥登录失败。请重试",
+      "passkeyMismatch": "所使用的通行密钥属于与输入邮箱不同的账号",
+      "rateLimitedWithin": "已达到速率限制。请在 {minutes} 分钟内重试",
+      "rateLimitedLessThan": "已达到速率限制。请在不足 {minutes} 分钟后重试"
+    },
+    "next": "下一步",
+    "emailDescription": "请输入邮箱地址。如果该域名已配置 SSO,将跳转到所属组织的身份提供商 (IdP)。",
+    "passwordTitle": "输入密码",
+    "backToSignIn": "返回登录",
+    "passkey": {
+      "title": "使用通行密钥登录",
+      "description": "此账号已注册通行密钥。请使用通行密钥验证身份。",
+      "button": "使用通行密钥"
+    },
+    "methods": {
+      "title": "选择登录方式",
+      "other": "选择其他方式",
+      "password": "使用密码登录",
+      "none": "没有其他可用的登录方式。"
     }
   },
   "passkey": {
@@ -256,7 +278,8 @@
     "setPassword": "设置密码",
     "setting": "设置中",
     "setDone": "密码已设置，请登录。",
-    "setError": "设置密码失败。"
+    "setError": "设置密码失败。",
+    "description": "我们会向您注册的邮箱地址发送密码重置链接。"
   },
   "oauthConsent": {
     "title": "是否授权此应用？",

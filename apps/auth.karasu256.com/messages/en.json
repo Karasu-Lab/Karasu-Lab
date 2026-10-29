@@ -36,7 +36,29 @@
       "user-disabled": "This account has been disabled",
       "email-already-in-use": "This email address is already in use",
       "weak-password": "Password is too short",
-      "unknown": "An error occurred. Please try again."
+      "unknown": "An error occurred. Please try again.",
+      "accountNotFound": "No account was found for this email address",
+      "invalidPassword": "The password is incorrect. Please try again",
+      "noMethod": "This account has neither a password nor a passkey set. Please use another method you registered",
+      "passkeyFailed": "Passkey sign-in failed. Please try again",
+      "passkeyMismatch": "The passkey used belongs to a different account than the email address entered",
+      "rateLimitedWithin": "Rate limit reached. Please try again within {minutes} minute(s)",
+      "rateLimitedLessThan": "Rate limit reached. Please try again in less than {minutes} minute(s)"
+    },
+    "next": "Next",
+    "emailDescription": "Enter your email address. If SSO is configured for its domain, you will be taken to your organization's identity provider (IdP).",
+    "passwordTitle": "Enter your password",
+    "backToSignIn": "Back to sign in",
+    "passkey": {
+      "title": "Sign in with a passkey",
+      "description": "This account has a passkey registered. Use it to verify it is you.",
+      "button": "Use a passkey"
+    },
+    "methods": {
+      "title": "Choose how to sign in",
+      "other": "Choose another way",
+      "password": "Sign in with a password",
+      "none": "No other sign-in methods are available."
     }
   },
   "passkey": {
@@ -256,7 +278,8 @@
     "setPassword": "Set password",
     "setting": "Setting",
     "setDone": "Password set. Please sign in.",
-    "setError": "Failed to set password."
+    "setError": "Failed to set password.",
+    "description": "We'll send a password reset link to the email address you registered."
   },
   "oauthConsent": {
     "title": "Authorize this app?",

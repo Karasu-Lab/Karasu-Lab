@@ -1,4 +1,4 @@
-import { index, pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { index, jsonb, pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { oauthClients } from './oauth-clients';
 import { sessions } from './auth-sessions';
 import { users } from './users';
@@ -20,10 +20,17 @@ export const oauthRefreshTokens = pgTable(
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     referenceId: text('reference_id'),
+    authorizationCodeId: text('authorization_code_id'),
+    resources: text('resources').array(),
+    requestedUserInfoClaims: text('requested_user_info_claims').array(),
     expiresAt: timestamp('expires_at'),
     createdAt: timestamp('created_at'),
     revoked: timestamp('revoked'),
+    rotatedAt: timestamp('rotated_at'),
+    rotationReplayResponse: text('rotation_replay_response'),
+    rotationReplayExpiresAt: timestamp('rotation_replay_expires_at'),
     authTime: timestamp('auth_time'),
+    confirmation: jsonb('confirmation'),
     scopes: text('scopes').array().notNull(),
   },
   (t) => [

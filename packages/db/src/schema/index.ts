@@ -11,5 +11,8 @@ export { oauthClients, type OAuthClient, type NewOAuthClient } from './oauth-cli
 export { oauthRefreshTokens, type OAuthRefreshToken, type NewOAuthRefreshToken } from './oauth-refresh-tokens';
 export { oauthAccessTokens, type OAuthAccessToken, type NewOAuthAccessToken } from './oauth-access-tokens';
 export { oauthConsents, type OAuthConsent, type NewOAuthConsent } from './oauth-consents';
+export { oauthResources, type OAuthResource, type NewOAuthResource } from './oauth-resources';
+export { oauthClientResources, type OAuthClientResource, type NewOAuthClientResource } from './oauth-client-resources';
+export { oauthClientAssertions, type OAuthClientAssertion, type NewOAuthClientAssertion } from './oauth-client-assertions';
 export { ssoProviders, type SsoProvider, type NewSsoProvider } from './sso-providers';
 export { qrGenerations, type QrGeneration, type NewQrGeneration } from './qr-generations';

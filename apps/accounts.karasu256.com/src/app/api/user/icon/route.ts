@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { deleteUploadedImage, uploadImage } from '@Hashibutogarasu/utils/server';
 import { getAdminAuth } from '@/lib/firebase-admin';
+import { getLinkedFirebaseUid } from '@/lib/auth/firebase-uid';
 import { getProviderProfile } from '@/lib/auth/provider-profile';
 import { requireSession } from '@/lib/api/require-session';
 import { badRequest } from '@/lib/api/responses';
@@ -56,9 +57,14 @@ export async function POST(request: NextRequest) {
   }
   const { url } = result;
 
-  const previous = await getAdminAuth().getUser(user.id);
-  await getAdminAuth().updateUser(user.id, { photoURL: url });
-  await cleanupPreviousIcon(previous.photoURL, url, imageApiUrl, cookieHeader);
+  // The Firebase link is optional: unlinked users just skip the photoURL
+  // sync (their icon still uploads and is returned).
+  const firebaseUid = await getLinkedFirebaseUid(user.id);
+  if (firebaseUid) {
+    const previous = await getAdminAuth().getUser(firebaseUid);
+    await getAdminAuth().updateUser(firebaseUid, { photoURL: url });
+    await cleanupPreviousIcon(previous.photoURL, url, imageApiUrl, cookieHeader);
+  }
 
   return NextResponse.json({ photoURL: url });
 }
@@ -85,9 +91,12 @@ export async function PUT(request: NextRequest) {
   const imageApiUrl = process.env.CDN_URL;
   const cookieHeader = (await headers()).get('cookie');
 
-  const previous = await getAdminAuth().getUser(user.id);
-  await getAdminAuth().updateUser(user.id, { photoURL: profile.avatarUrl });
-  await cleanupPreviousIcon(previous.photoURL, profile.avatarUrl, imageApiUrl, cookieHeader);
+  const firebaseUid = await getLinkedFirebaseUid(user.id);
+  if (firebaseUid) {
+    const previous = await getAdminAuth().getUser(firebaseUid);
+    await getAdminAuth().updateUser(firebaseUid, { photoURL: profile.avatarUrl });
+    await cleanupPreviousIcon(previous.photoURL, profile.avatarUrl, imageApiUrl, cookieHeader);
+  }
 
   return NextResponse.json({ photoURL: profile.avatarUrl });
 }
@@ -105,9 +114,12 @@ export async function DELETE() {
   const imageApiUrl = process.env.CDN_URL;
   const cookieHeader = (await headers()).get('cookie');
 
-  const previous = await getAdminAuth().getUser(user.id);
-  await getAdminAuth().updateUser(user.id, { photoURL: null });
-  await cleanupPreviousIcon(previous.photoURL, null, imageApiUrl, cookieHeader);
+  const firebaseUid = await getLinkedFirebaseUid(user.id);
+  if (firebaseUid) {
+    const previous = await getAdminAuth().getUser(firebaseUid);
+    await getAdminAuth().updateUser(firebaseUid, { photoURL: null });
+    await cleanupPreviousIcon(previous.photoURL, null, imageApiUrl, cookieHeader);
+  }
 
   return NextResponse.json({ photoURL: null });
 }

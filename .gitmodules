@@ -24,7 +24,7 @@
 	branch = main
 [submodule "apps/api.admin.karasu256.com"]
 	path = apps/api.admin.karasu256.com
-	url = https://github.com/Karasu-Lab/api.admin.karasu256.com.git
+	url = https://github.com/Karasu-Lab/api-admin.karasu256.com.git
 	branch = main
 [submodule "apps/api.karasu256.com"]
 	path = apps/api.karasu256.com

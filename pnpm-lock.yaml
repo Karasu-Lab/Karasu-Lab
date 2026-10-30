@@ -163,6 +163,13 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  '@karasu-lab/api-permissions': workspace:*
+  '@karasu-lab/challengetoken': workspace:*
+  '@karasu-lab/db': workspace:*
+  '@karasu-lab/flags': workspace:*
+  '@karasu-lab/types': workspace:*
+  '@karasu-lab/ui': workspace:*
+  '@karasu-lab/utils': workspace:*
   jwks-rsa>jose: ^5.10.0
   zod@^4: 4.5.4
   jose@^6: 6.2.5
@@ -219,24 +226,6 @@ importers:
 
   apps/accounts.karasu256.com:
     dependencies:
-      '@Hashibutogarasu/api-permissions':
-        specifier: workspace:*
-        version: link:../../packages/api-permissions
-      '@Hashibutogarasu/db':
-        specifier: workspace:*
-        version: link:../../packages/db
-      '@Hashibutogarasu/flags':
-        specifier: workspace:*
-        version: link:../../packages/flags
-      '@Hashibutogarasu/types':
-        specifier: workspace:*
-        version: link:../../packages/types
-      '@Hashibutogarasu/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      '@Hashibutogarasu/utils':
-        specifier: workspace:*
-        version: link:../../packages/utils
       '@base-ui/react':
         specifier: ^1.6.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -258,6 +247,24 @@ importers:
       '@fortawesome/react-fontawesome':
         specifier: ^3.3.1
         version: 3.5.0(@fortawesome/fontawesome-svg-core@7.3.1)(react@19.2.4)
+      '@karasu-lab/api-permissions':
+        specifier: workspace:*
+        version: link:../../packages/api-permissions
+      '@karasu-lab/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@karasu-lab/flags':
+        specifier: workspace:*
+        version: link:../../packages/flags
+      '@karasu-lab/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@karasu-lab/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@karasu-lab/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@simplewebauthn/browser':
         specifier: ^13.3.0
         version: 13.3.0
@@ -358,13 +365,13 @@ importers:
 
   apps/admin.karasu256.com:
     dependencies:
-      '@Hashibutogarasu/types':
+      '@karasu-lab/types':
         specifier: workspace:*
         version: link:../../packages/types
-      '@Hashibutogarasu/ui':
+      '@karasu-lab/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@Hashibutogarasu/utils':
+      '@karasu-lab/utils':
         specifier: workspace:*
         version: link:../../packages/utils
       clsx:
@@ -428,12 +435,6 @@ importers:
 
   apps/api-auth.karasu256.com:
     dependencies:
-      '@Hashibutogarasu/db':
-        specifier: workspace:*
-        version: link:../../packages/db
-      '@Hashibutogarasu/utils':
-        specifier: workspace:*
-        version: link:../../packages/utils
       '@better-auth/api-key':
         specifier: 1.7.12
         version: 1.7.12(@better-auth/core@1.7.12(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(@opentelemetry/api@1.10.0)(better-call@1.4.4(zod@4.5.4))(jose@6.2.5)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)(better-auth@1.7.12(@opentelemetry/api@1.10.0)(drizzle-kit@0.30.6(supports-color@10.2.2))(drizzle-orm@0.44.7(@cloudflare/workers-types@4.20260702.1)(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(gel@2.2.1(supports-color@10.2.2))(kysely@0.29.7)(pg@8.23.1)(postgres@3.4.9))(next@16.2.9(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.10.0)(@playwright/test@1.64.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.23.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(better-call@1.4.4(zod@4.5.4))
@@ -452,6 +453,12 @@ importers:
       '@better-auth/sso':
         specifier: 1.7.12
         version: 1.7.12(@better-auth/core@1.7.12(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(@opentelemetry/api@1.10.0)(better-call@1.4.4(zod@4.5.4))(jose@6.2.5)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-auth@1.7.12(@opentelemetry/api@1.10.0)(drizzle-kit@0.30.6(supports-color@10.2.2))(drizzle-orm@0.44.7(@cloudflare/workers-types@4.20260702.1)(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(gel@2.2.1(supports-color@10.2.2))(kysely@0.29.7)(pg@8.23.1)(postgres@3.4.9))(next@16.2.9(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.10.0)(@playwright/test@1.64.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.23.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(better-call@1.4.4(zod@4.5.4))
+      '@karasu-lab/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@karasu-lab/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       better-auth:
         specifier: ^1.7.12
         version: 1.7.12(@opentelemetry/api@1.10.0)(drizzle-kit@0.30.6(supports-color@10.2.2))(drizzle-orm@0.44.7(@cloudflare/workers-types@4.20260702.1)(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(gel@2.2.1(supports-color@10.2.2))(kysely@0.29.7)(pg@8.23.1)(postgres@3.4.9))(next@16.2.9(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.10.0)(@playwright/test@1.64.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.23.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -598,10 +605,10 @@ importers:
 
   apps/api.karasu256.com:
     dependencies:
-      '@Hashibutogarasu/api-permissions':
+      '@karasu-lab/api-permissions':
         specifier: workspace:*
         version: link:../../packages/api-permissions
-      '@Hashibutogarasu/utils':
+      '@karasu-lab/utils':
         specifier: workspace:*
         version: link:../../packages/utils
       elysia:
@@ -650,18 +657,6 @@ importers:
 
   apps/auth.karasu256.com:
     dependencies:
-      '@Hashibutogarasu/flags':
-        specifier: workspace:*
-        version: link:../../packages/flags
-      '@Hashibutogarasu/types':
-        specifier: workspace:*
-        version: link:../../packages/types
-      '@Hashibutogarasu/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      '@Hashibutogarasu/utils':
-        specifier: workspace:*
-        version: link:../../packages/utils
       '@base-ui/react':
         specifier: ^1.6.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -680,6 +675,18 @@ importers:
       '@fortawesome/react-fontawesome':
         specifier: ^3.3.1
         version: 3.5.0(@fortawesome/fontawesome-svg-core@7.3.1)(react@19.2.4)
+      '@karasu-lab/flags':
+        specifier: workspace:*
+        version: link:../../packages/flags
+      '@karasu-lab/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@karasu-lab/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@karasu-lab/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -750,15 +757,15 @@ importers:
 
   apps/cdn.karasu256.com:
     dependencies:
-      '@Hashibutogarasu/challengetoken':
-        specifier: workspace:*
-        version: link:../../packages/challengetoken
-      '@Hashibutogarasu/utils':
-        specifier: workspace:*
-        version: link:../../packages/utils
       '@elysiajs/cors':
         specifier: ^1.4.2
         version: 1.4.2(elysia@1.4.30(@sinclair/typebox@0.34.52)(exact-mirror@1.2.6)(file-type@21.3.4(supports-color@10.2.2))(openapi-types@12.1.3)(typescript@5.9.3))
+      '@karasu-lab/challengetoken':
+        specifier: workspace:*
+        version: link:../../packages/challengetoken
+      '@karasu-lab/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       elysia:
         specifier: ^1.4.29
         version: 1.4.30(@sinclair/typebox@0.34.52)(exact-mirror@1.2.6)(file-type@21.3.4(supports-color@10.2.2))(openapi-types@12.1.3)(typescript@5.9.3)
@@ -787,12 +794,12 @@ importers:
 
   apps/cron-jobs:
     dependencies:
-      '@Hashibutogarasu/db':
-        specifier: workspace:*
-        version: link:../../packages/db
       '@elysiajs/cors':
         specifier: ^1.4.2
         version: 1.4.2(elysia@1.4.30(@sinclair/typebox@0.34.52)(exact-mirror@1.2.6)(file-type@21.3.4(supports-color@10.2.2))(openapi-types@12.1.3)(typescript@5.9.3))
+      '@karasu-lab/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       drizzle-orm:
         specifier: ^0.44.0
         version: 0.44.7(@cloudflare/workers-types@4.20260702.1)(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(gel@2.2.1(supports-color@10.2.2))(kysely@0.29.7)(pg@8.23.1)(postgres@3.4.9)
@@ -821,24 +828,6 @@ importers:
 
   apps/karasu256.com:
     dependencies:
-      '@Hashibutogarasu/api-permissions':
-        specifier: workspace:*
-        version: link:../../packages/api-permissions
-      '@Hashibutogarasu/db':
-        specifier: workspace:*
-        version: link:../../packages/db
-      '@Hashibutogarasu/flags':
-        specifier: workspace:*
-        version: link:../../packages/flags
-      '@Hashibutogarasu/types':
-        specifier: workspace:*
-        version: link:../../packages/types
-      '@Hashibutogarasu/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      '@Hashibutogarasu/utils':
-        specifier: workspace:*
-        version: link:../../packages/utils
       '@base-ui/react':
         specifier: ^1.6.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -848,6 +837,24 @@ importers:
       '@flags-sdk/vercel':
         specifier: ^1.4.4
         version: 1.5.2(@aws-sdk/credential-provider-web-identity@3.972.84)(flags@4.3.1(@opentelemetry/api@1.10.0)(next@15.3.9(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.10.0)(@playwright/test@1.64.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(next@15.3.9(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.10.0)(@playwright/test@1.64.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(ws@8.21.0)
+      '@karasu-lab/api-permissions':
+        specifier: workspace:*
+        version: link:../../packages/api-permissions
+      '@karasu-lab/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@karasu-lab/flags':
+        specifier: workspace:*
+        version: link:../../packages/flags
+      '@karasu-lab/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@karasu-lab/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@karasu-lab/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@mdx-js/loader':
         specifier: ^3.1.1
         version: 3.1.1(supports-color@10.2.2)(webpack@5.106.2(@swc/core@1.16.18)(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.31)(uglify-js@3.19.3))
@@ -945,15 +952,15 @@ importers:
 
   apps/me.karasu256.com:
     dependencies:
-      '@Hashibutogarasu/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      '@Hashibutogarasu/utils':
-        specifier: workspace:*
-        version: link:../../packages/utils
       '@base-ui/react':
         specifier: ^1.6.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@karasu-lab/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@karasu-lab/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1012,21 +1019,6 @@ importers:
 
   apps/qr.karasu256.com:
     dependencies:
-      '@Hashibutogarasu/challengetoken':
-        specifier: workspace:*
-        version: link:../../packages/challengetoken
-      '@Hashibutogarasu/db':
-        specifier: workspace:*
-        version: link:../../packages/db
-      '@Hashibutogarasu/types':
-        specifier: workspace:*
-        version: link:../../packages/types
-      '@Hashibutogarasu/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      '@Hashibutogarasu/utils':
-        specifier: workspace:*
-        version: link:../../packages/utils
       '@base-ui/react':
         specifier: ^1.6.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1039,6 +1031,21 @@ importers:
       '@fortawesome/react-fontawesome':
         specifier: ^3.3.1
         version: 3.5.0(@fortawesome/fontawesome-svg-core@7.3.1)(react@19.2.4)
+      '@karasu-lab/challengetoken':
+        specifier: workspace:*
+        version: link:../../packages/challengetoken
+      '@karasu-lab/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@karasu-lab/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@karasu-lab/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@karasu-lab/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@paralleldrive/cuid2':
         specifier: ^3.3.0
         version: 3.3.0
@@ -1118,18 +1125,6 @@ importers:
 
   apps/sso.karasu256.com:
     dependencies:
-      '@Hashibutogarasu/flags':
-        specifier: workspace:*
-        version: link:../../packages/flags
-      '@Hashibutogarasu/types':
-        specifier: workspace:*
-        version: link:../../packages/types
-      '@Hashibutogarasu/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      '@Hashibutogarasu/utils':
-        specifier: workspace:*
-        version: link:../../packages/utils
       '@base-ui/react':
         specifier: ^1.6.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1145,6 +1140,18 @@ importers:
       '@fortawesome/react-fontawesome':
         specifier: ^3.3.1
         version: 3.5.0(@fortawesome/fontawesome-svg-core@7.3.1)(react@19.2.4)
+      '@karasu-lab/flags':
+        specifier: workspace:*
+        version: link:../../packages/flags
+      '@karasu-lab/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@karasu-lab/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@karasu-lab/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1288,12 +1295,12 @@ importers:
 
   packages/ui:
     dependencies:
-      '@Hashibutogarasu/utils':
-        specifier: workspace:*
-        version: link:../utils
       '@base-ui/react':
         specifier: ^1.6.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@karasu-lab/utils':
+        specifier: workspace:*
+        version: link:../utils
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1343,9 +1350,6 @@ importers:
 
   packages/utils:
     dependencies:
-      '@Hashibutogarasu/api-permissions':
-        specifier: workspace:*
-        version: link:../api-permissions
       '@better-auth/oauth-provider':
         specifier: ^1.7.12
         version: 1.7.12(@better-auth/core@1.7.12(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(@opentelemetry/api@1.10.0)(better-call@1.4.4(zod@4.5.4))(jose@6.2.5)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-auth@1.7.12(@opentelemetry/api@1.10.0)(drizzle-orm@0.44.7(@cloudflare/workers-types@4.20260702.1)(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(gel@2.2.1(supports-color@10.2.2))(kysely@0.29.7)(pg@8.23.1)(postgres@3.4.9))(next@15.3.9(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.10.0)(@playwright/test@1.64.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.23.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(better-call@1.4.4(zod@4.5.4))
@@ -1355,6 +1359,9 @@ importers:
       '@better-auth/sso':
         specifier: 1.7.12
         version: 1.7.12(@better-auth/core@1.7.12(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(@opentelemetry/api@1.10.0)(better-call@1.4.4(zod@4.5.4))(jose@6.2.5)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-auth@1.7.12(@opentelemetry/api@1.10.0)(drizzle-orm@0.44.7(@cloudflare/workers-types@4.20260702.1)(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(gel@2.2.1(supports-color@10.2.2))(kysely@0.29.7)(pg@8.23.1)(postgres@3.4.9))(next@15.3.9(@babel/core@7.29.7(supports-color@10.2.2))(@opentelemetry/api@1.10.0)(@playwright/test@1.64.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.23.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(better-call@1.4.4(zod@4.5.4))
+      '@karasu-lab/api-permissions':
+        specifier: workspace:*
+        version: link:../api-permissions
       '@react-email/components':
         specifier: ^1.0.12
         version: 1.0.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4)

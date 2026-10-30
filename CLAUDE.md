@@ -78,7 +78,7 @@ If a command's output needs to be told apart from another's, run them as separat
 - **accounts.karasu256.com** — the account portal (`/settings`): profile, linked providers, passkey and password management, API keys, OAuth clients, and multi-account switching, calling api-auth.karasu256.com for everything authentication-related. Owns the Drizzle migration files and `drizzle-kit` config/scripts (`db:generate`, `db:migrate:dev`, `db:migrate:prod`) for the schema defined in `packages/db`.
 - **cdn.karasu256.com** — an Elysia app on Cloudflare Workers that serves as the image/file CDN: public routes serve images by path, protected/anonymous routes handle upload and delete, backed by CORS, rate-limiting, and auth middleware.
 - **qr.karasu256.com** — a Next.js app that generates and displays a per-user (or anonymous) QR code linking to their profile/content, uploading the generated image through the CDN and caching the result in Redis.
-- **cron-jobs** — a Cloudflare Worker (`wrangler`) scaffold for scheduled jobs, depending on `@Hashibutogarasu/db` for future DB-backed tasks.
+- **cron-jobs** — a Cloudflare Worker (`wrangler`) scaffold for scheduled jobs, depending on `@karasu-lab/db` for future DB-backed tasks.
 
 ### Packages (`packages/*`)
 

@@ -3,6 +3,13 @@ packages:
   - 'packages/*'
 
 overrides:
+  '@karasu-lab/api-permissions': 'workspace:*'
+  '@karasu-lab/challengetoken': 'workspace:*'
+  '@karasu-lab/db': 'workspace:*'
+  '@karasu-lab/flags': 'workspace:*'
+  '@karasu-lab/types': 'workspace:*'
+  '@karasu-lab/ui': 'workspace:*'
+  '@karasu-lab/utils': 'workspace:*'
   jwks-rsa>jose: '^5.10.0'
   zod@^4: 4.5.4
   jose@^6: 6.2.5

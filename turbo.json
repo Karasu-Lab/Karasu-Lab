@@ -8,11 +8,11 @@
       "outputs": ["dist/**", ".next/**", "!.next/cache/**", "!.next/dev/**"]
     },
     "dev": {
-      "dependsOn": ["@Hashibutogarasu/docker#run"],
+      "dependsOn": ["@karasu-lab/docker#run"],
       "cache": false,
       "persistent": true
     },
-    "@Hashibutogarasu/docker#run": {
+    "@karasu-lab/docker#run": {
       "cache": false
     },
     "start": {

@@ -57,8 +57,33 @@ if (!appDir || !outputFile || names.length === 0) {
   process.exit(1);
 }
 
-const config = parseJsonc(readFileSync(join(appDir, 'wrangler.jsonc'), 'utf8'));
-const defaults = config.env?.local?.vars ?? {};
+/** Reads the local defaults from wrangler.toml's [env.local.vars] table (for apps not on wrangler.jsonc). */
+function tomlLocalDefaults(text) {
+  const defaults = {};
+  let inSection = false;
+  for (const line of text.split('\n')) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('[')) {
+      inSection = trimmed === '[env.local.vars]';
+      continue;
+    }
+    if (!inSection) continue;
+    const match = trimmed.match(/^([A-Z0-9_]+)\s*=\s*"([^"]*)"$/) ?? trimmed.match(/^([A-Z0-9_]+)\s*=\s*'([^']*)'$/);
+    if (match) defaults[match[1]] = match[2];
+  }
+  return defaults;
+}
+
+let config;
+let defaults;
+try {
+  config = parseJsonc(readFileSync(join(appDir, 'wrangler.jsonc'), 'utf8'));
+  defaults = config.env?.local?.vars ?? {};
+} catch {
+  const toml = readFileSync(join(appDir, 'wrangler.toml'), 'utf8');
+  config = { name: toml.match(/^name\s*=\s*"([^"]+)"/m)?.[1] ?? appDir };
+  defaults = tomlLocalDefaults(toml);
+}
 
 const secrets = {};
 const sources = [];

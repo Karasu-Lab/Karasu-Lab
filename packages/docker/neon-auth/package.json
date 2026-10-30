@@ -1,9 +1,0 @@
-{
-  "name": "karasu256-neon-auth",
-  "private": true,
-  "type": "module",
-  "dependencies": {
-    "better-auth": "1.7.12",
-    "pg": "8.23.1"
-  }
-}

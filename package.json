@@ -1,11 +1,11 @@
 {
-  "name": "@Hashibutogarasu/karasu-lab-web-monorepo",
+  "name": "@karasu-lab/karasu-lab-web-monorepo",
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@12.15.0",
   "scripts": {
     "dev": "turbo dev",
-    "dev:auth": "pnpm --filter @Hashibutogarasu/docker run run:android && pnpm --parallel --filter api-auth.karasu256.com --filter api.karasu256.com --filter @Hashibutogarasu/cloudflared-config dev",
+    "dev:auth": "pnpm --filter @karasu-lab/docker run run:android && pnpm --parallel --filter api-auth.karasu256.com --filter api.karasu256.com --filter @karasu-lab/cloudflared-config dev",
     "build": "turbo build",
     "deploy": "turbo deploy",
     "deploy:prod": "turbo deploy:prod",

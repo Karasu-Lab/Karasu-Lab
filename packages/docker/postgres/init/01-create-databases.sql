@@ -1,1 +1,0 @@
-CREATE DATABASE neon_auth;

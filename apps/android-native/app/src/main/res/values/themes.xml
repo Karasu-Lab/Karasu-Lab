@@ -1,7 +1,0 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.KarasuLab" parent="android:Theme.Material.Light.NoActionBar" />
-
-    <style name="Theme.KarasuLab.Starting" parent="Theme.SplashScreen">
-        <item name="postSplashScreenTheme">@style/Theme.KarasuLab</item>
-    </style>
-</resources>

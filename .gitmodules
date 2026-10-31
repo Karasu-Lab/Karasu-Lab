@@ -47,8 +47,8 @@
 	url = https://github.com/Karasu-Lab/cron-jobs.git
 	branch = main
 [submodule "apps/karasu256.com"]
-	path = apps/karasu256.com
-	url = https://github.com/Karasu-Lab/karasu256.com.git
+	path = apps/www.karasu256.com
+	url = https://github.com/Karasu-Lab/www.karasu256.com.git
 	branch = main
 [submodule "apps/qr.karasu256.com"]
 	path = apps/qr.karasu256.com

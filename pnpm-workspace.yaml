@@ -6,7 +6,7 @@ overrides:
   '@karasu-lab/api-permissions': 'workspace:*'
   '@karasu-lab/challengetoken': 'workspace:*'
   '@karasu-lab/db': 'workspace:*'
-  '@karasu-lab/flags': 'workspace:*'
+  '@karasu-lab/flags-sdk': 'workspace:*'
   '@karasu-lab/sdk': 'workspace:*'
   '@karasu-lab/types': 'workspace:*'
   '@karasu-lab/ui': 'workspace:*'

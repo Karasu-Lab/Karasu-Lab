@@ -166,7 +166,7 @@ overrides:
   '@karasu-lab/api-permissions': workspace:*
   '@karasu-lab/challengetoken': workspace:*
   '@karasu-lab/db': workspace:*
-  '@karasu-lab/flags': workspace:*
+  '@karasu-lab/flags-sdk': workspace:*
   '@karasu-lab/sdk': workspace:*
   '@karasu-lab/types': workspace:*
   '@karasu-lab/ui': workspace:*
@@ -248,9 +248,9 @@ importers:
       '@karasu-lab/api-permissions':
         specifier: workspace:*
         version: link:../../packages/api-permissions
-      '@karasu-lab/flags':
+      '@karasu-lab/flags-sdk':
         specifier: workspace:*
-        version: link:../../packages/flags
+        version: link:../../packages/flags-sdk
       '@karasu-lab/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -676,9 +676,9 @@ importers:
       '@fortawesome/react-fontawesome':
         specifier: ^3.3.1
         version: 3.5.0(@fortawesome/fontawesome-svg-core@7.3.1)(react@19.2.4)
-      '@karasu-lab/flags':
+      '@karasu-lab/flags-sdk':
         specifier: workspace:*
-        version: link:../../packages/flags
+        version: link:../../packages/flags-sdk
       '@karasu-lab/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
@@ -1063,9 +1063,9 @@ importers:
       '@fortawesome/react-fontawesome':
         specifier: ^3.3.1
         version: 3.5.0(@fortawesome/fontawesome-svg-core@7.3.1)(react@19.2.4)
-      '@karasu-lab/flags':
+      '@karasu-lab/flags-sdk':
         specifier: workspace:*
-        version: link:../../packages/flags
+        version: link:../../packages/flags-sdk
       '@karasu-lab/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
@@ -1172,9 +1172,9 @@ importers:
       '@karasu-lab/db':
         specifier: workspace:*
         version: link:../../packages/db
-      '@karasu-lab/flags':
+      '@karasu-lab/flags-sdk':
         specifier: workspace:*
-        version: link:../../packages/flags
+        version: link:../../packages/flags-sdk
       '@karasu-lab/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -1229,6 +1229,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.2.4(react@19.2.4)
+      react-icons:
+        specifier: ^5.7.0
+        version: 5.7.0(react@19.2.4)
       shadcn:
         specifier: ^4.11.0
         version: 4.22.1(supports-color@10.2.2)
@@ -1315,7 +1318,7 @@ importers:
 
   packages/docker: {}
 
-  packages/flags:
+  packages/flags-sdk:
     dependencies:
       flags:
         specifier: ^4.2.0
@@ -7267,11 +7270,6 @@ packages:
 
   ajv-formats@3.0.1:
     resolution: {integrity: sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ==}
-    peerDependencies:
-      ajv: ^8.0.0
-    peerDependenciesMeta:
-      ajv:
-        optional: true
 
   ajv-keywords@3.5.2:
     resolution: {integrity: sha512-5p6WTN0DdTGVQk6VjcEju19IgaHudalcfabD7yhDGeA6bcQnmL+CpveLJq/3hvfwd1aof6L386Ougkx6RfyMIQ==}
@@ -7943,6 +7941,10 @@ packages:
     resolution: {integrity: sha512-+i4L0zUGgRcEnhsxueVrP7iBGxBx5iD0WOTYg1MwFEu2ZyCmH5Ov2V1cul2Ht5UchRQQgftCf4be/RxspuW6QQ==}
     engines: {node: '>=20'}
     hasBin: true
+
+  co@4.6.0:
+    resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
+    engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
 
   code-block-writer@10.1.1:
     resolution: {integrity: sha512-67ueh2IRGst/51p0n6FvPrnRjAGHY5F8xdjkgrYE7DDzpJe6qA07RYQ9VcoUeo5ATOjSOiWpSL3SWBRRbempMw==}
@@ -9466,6 +9468,10 @@ packages:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
     engines: {node: '>=8'}
 
+  is-generator-fn@2.1.0:
+    resolution: {integrity: sha512-cTIB4yPYL/Grw0EaSzASzg6bBy9gqCofvWN8okThAYIxKJZC+udlRAmGbM0XLeniEJSs8uEgHPGuHSe1XsOLSQ==}
+    engines: {node: '>=6'}
+
   is-generator-function@1.1.2:
     resolution: {integrity: sha512-upqt1SkGkODW9tsGNG5mtXTXtECizwtS2kA161M+gJPc1xdb/Ax629af6YrTwcOeQHbewrPNlE5Dx7kzvXTizA==}
     engines: {node: '>= 0.4'}
@@ -9694,6 +9700,10 @@ packages:
 
   jest-docblock@30.5.0:
     resolution: {integrity: sha512-NwDqcxtoZi33RhuW+zJS/RVA3rmheQ8BnwpYZuc/Eruaz6seQb7+aoCeDZu/3X7W2XmD8DbSo9Pn72DbKsBFYw==}
+    engines: {node: ^18.14.0 || ^20.0.0 || ^22.0.0 || >=24.0.0}
+
+  jest-each@30.5.2:
+    resolution: {integrity: sha512-GRrW+7fmmgmkvyfEBqc1QFdWnF1Ex5yG6Y6AWL4TTxnkWlKIT98dsKh3P3UuWm6v4XsQwVE6DEzXIPMzWJ3ZbA==}
     engines: {node: ^18.14.0 || ^20.0.0 || ^22.0.0 || >=24.0.0}
 
   jest-environment-node@30.5.2:
@@ -11099,6 +11109,9 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
+  pure-rand@7.0.1:
+    resolution: {integrity: sha512-oTUZM/NAZS8p7ANR3SHh30kXB+zK2r2BPcEn/awJIbOvq82WoMN4p62AWWp3Hhw50G0xMsw1mhIBLqHw64EcNQ==}
+
   pvtsutils@1.3.6:
     resolution: {integrity: sha512-PLgQXQ6H2FWCaeRak8vvk1GW462lMxB5s3Jm673N82zI4vqtVUPuZdffdZbPDFRoU8kAhItWFtPCWiPpp4/EDg==}
 
@@ -11774,13 +11787,10 @@ packages:
     resolution: {integrity: sha512-drKKsqvDBxVRn4ySU67iQ5nQBuo/1xyYeBfdhDde112PkqrS3+95KPnpDs5hFRcmrW+q6+gbyywYYYR14oWFtw==}
     engines: {node: '>= 16'}
     peerDependencies:
-      css-to-react-native: '>= 3.2.0'
       react: '>= 16.8.0'
       react-dom: '>= 16.8.0'
       react-native: '>= 0.68.0'
     peerDependenciesMeta:
-      css-to-react-native:
-        optional: true
       react-dom:
         optional: true
       react-native:
@@ -15700,6 +15710,7 @@ snapshots:
       pretty-format: 30.5.1
       slash: 3.0.0
     transitivePeerDependencies:
+      - babel-plugin-macros
       - esbuild-register
       - supports-color
       - ts-node
@@ -19594,6 +19605,8 @@ snapshots:
 
   cn@0.2.6: {}
 
+  co@4.6.0: {}
+
   code-block-writer@10.1.1: {}
 
   code-block-writer@13.0.3: {}
@@ -21442,6 +21455,8 @@ snapshots:
 
   is-fullwidth-code-point@3.0.0: {}
 
+  is-generator-fn@2.1.0: {}
+
   is-generator-function@1.1.2:
     dependencies:
       call-bound: 1.0.4
@@ -21622,7 +21637,31 @@ snapshots:
       jest-util: 30.5.1
       p-limit: 3.1.0
 
-  jest-circus@30.5.2: {}
+  jest-circus@30.5.2(supports-color@10.2.2):
+    dependencies:
+      '@jest/environment': 30.5.2
+      '@jest/expect': 30.5.2(supports-color@10.2.2)
+      '@jest/test-result': 30.5.2
+      '@jest/types': 30.5.1
+      '@types/node': 24.19.2
+      chalk: 4.1.2
+      co: 4.6.0
+      dedent: 1.7.2
+      is-generator-fn: 2.1.0
+      jest-each: 30.5.2
+      jest-matcher-utils: 30.5.2
+      jest-message-util: 30.5.1
+      jest-runtime: 30.5.2(supports-color@10.2.2)
+      jest-snapshot: 30.5.2(supports-color@10.2.2)
+      jest-util: 30.5.1
+      p-limit: 3.1.0
+      pretty-format: 30.5.1
+      pure-rand: 7.0.1
+      slash: 3.0.0
+      stack-utils: 2.0.6
+    transitivePeerDependencies:
+      - babel-plugin-macros
+      - supports-color
 
   jest-cli@30.5.2(@types/node@24.19.2)(esbuild-register@3.6.0(esbuild@0.28.2)(supports-color@10.2.2))(supports-color@10.2.2)(ts-node@10.9.2(@swc/core@1.16.18)(@types/node@24.19.2)(typescript@5.9.3)):
     dependencies:
@@ -21638,6 +21677,7 @@ snapshots:
       yargs: 17.7.3
     transitivePeerDependencies:
       - '@types/node'
+      - babel-plugin-macros
       - esbuild-register
       - supports-color
       - ts-node
@@ -21655,7 +21695,7 @@ snapshots:
       deepmerge: 4.3.1
       glob: 13.0.6
       graceful-fs: 4.2.11
-      jest-circus: 30.5.2
+      jest-circus: 30.5.2(supports-color@10.2.2)
       jest-docblock: 30.5.0
       jest-environment-node: 30.5.2
       jest-regex-util: 30.5.0
@@ -21672,6 +21712,7 @@ snapshots:
       esbuild-register: 3.6.0(esbuild@0.28.2)(supports-color@10.2.2)
       ts-node: 10.9.2(@swc/core@1.16.18)(@types/node@24.19.2)(typescript@5.9.3)
     transitivePeerDependencies:
+      - babel-plugin-macros
       - supports-color
 
   jest-diff@30.5.2:
@@ -21685,7 +21726,24 @@ snapshots:
     dependencies:
       detect-newline: 3.1.0
 
-  jest-environment-node@30.5.2: {}
+  jest-each@30.5.2:
+    dependencies:
+      '@jest/get-type': 30.5.0
+      '@jest/types': 30.5.1
+      chalk: 4.1.2
+      jest-regex-util: 30.5.0
+      jest-util: 30.5.1
+      pretty-format: 30.5.1
+
+  jest-environment-node@30.5.2:
+    dependencies:
+      '@jest/environment': 30.5.2
+      '@jest/fake-timers': 30.5.2
+      '@jest/types': 30.5.1
+      '@types/node': 24.19.2
+      jest-mock: 30.5.2
+      jest-util: 30.5.1
+      jest-validate: 30.5.1
 
   jest-haste-map@30.5.1:
     dependencies:
@@ -21884,6 +21942,7 @@ snapshots:
       jest-cli: 30.5.2(@types/node@24.19.2)(esbuild-register@3.6.0(esbuild@0.28.2)(supports-color@10.2.2))(supports-color@10.2.2)(ts-node@10.9.2(@swc/core@1.16.18)(@types/node@24.19.2)(typescript@5.9.3))
     transitivePeerDependencies:
       - '@types/node'
+      - babel-plugin-macros
       - esbuild-register
       - supports-color
       - ts-node
@@ -23400,6 +23459,8 @@ snapshots:
       once: 1.4.0
 
   punycode@2.3.1: {}
+
+  pure-rand@7.0.1: {}
 
   pvtsutils@1.3.6:
     dependencies:

@@ -94,3 +94,7 @@
 	path = apps/apps.karasu256.com
 	url = https://github.com/Karasu-Lab/apps.karasu256.com.git
 	branch = main
+[submodule "apps/flags.karasu256.com"]
+	path = apps/flags.karasu256.com
+	url = https://github.com/Karasu-Lab/flags.karasu256.com.git
+	branch = main

@@ -15,17 +15,32 @@
       forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
     in
     {
-      devShells = forAllSystems (pkgs: {
-        default = pkgs.mkShell {
-          packages = with pkgs; [
-            nodejs_24
-            node-gyp
-            pnpm
-            python3
-            git
-          ];
-          env.npm_config_manage_package_manager_versions = "false";
-        };
-      });
+      devShells = forAllSystems (
+        pkgs:
+        let
+          githubPackagesToken = pkgs.writeShellScript "github-packages-token" ''
+            exec ${pkgs.gh}/bin/gh auth token
+          '';
+          npmrcAuthFile = pkgs.writeText "npmrc-auth" ''
+            //npm.pkg.github.com/:tokenHelper=${githubPackagesToken}
+          '';
+        in
+        {
+          default = pkgs.mkShell {
+            packages = with pkgs; [
+              nodejs_24
+              node-gyp
+              pnpm
+              python3
+              git
+              gh
+            ];
+            env = {
+              npm_config_manage_package_manager_versions = "false";
+              PNPM_CONFIG_NPMRC_AUTH_FILE = "${npmrcAuthFile}";
+            };
+          };
+        }
+      );
     };
 }

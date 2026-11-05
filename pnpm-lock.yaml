@@ -474,6 +474,12 @@ importers:
       '@types/node':
         specifier: ^26.6.4
         version: 26.6.5
+      dotenv-cli:
+        specifier: ^11.0.0
+        version: 11.0.0
+      drizzle-kit:
+        specifier: ^0.30.6
+        version: 0.30.6(supports-color@10.2.2)
       typescript:
         specifier: ~6.0.2
         version: 6.0.3

@@ -106,3 +106,7 @@
 	path = apps/mcp.karasu256.com
 	url = https://github.com/Karasu-Lab/mcp.karasu256.com.git
 	branch = main
+[submodule "apps/git.karasu256.com"]
+	path = apps/git.karasu256.com
+	url = https://github.com/Karasu-Lab/git.karasu256.com.git
+	branch = main

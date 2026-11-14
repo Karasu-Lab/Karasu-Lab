@@ -98,10 +98,6 @@
 	path = apps/flags.karasu256.com
 	url = https://github.com/Karasu-Lab/flags.karasu256.com.git
 	branch = main
-[submodule "packages/flags-sdk"]
-	path = packages/flags-sdk
-	url = https://github.com/Karasu-Lab/flags-sdk.git
-	branch = main
 [submodule "apps/mcp.karasu256.com"]
 	path = apps/mcp.karasu256.com
 	url = https://github.com/Karasu-Lab/mcp.karasu256.com.git
@@ -109,4 +105,8 @@
 [submodule "apps/git.karasu256.com"]
 	path = apps/git.karasu256.com
 	url = https://github.com/Karasu-Lab/git.karasu256.com.git
+	branch = main
+[submodule "packages/sse"]
+	path = packages/sse
+	url = https://github.com/Karasu-Lab/sse-package.git
 	branch = main

@@ -13,7 +13,7 @@ Body:
 - Group details under short bold headings (one per area or file group), each followed by a bullet list.
   Reference files, classes, functions, and commands in backticks.
 - Call out deliberate limitations, behavior left unchanged, and anything not done yet.
-- Test plan: check only what was actually run (builds, type checks, tests). Leave on-device or
+- Check List: check only what was actually run (builds, type checks, tests). Leave on-device or
   in-browser checks that were not performed unchecked.
 - End with the attribution footer required by the active session's instructions, unchanged.
 - Delete this comment block.
@@ -36,7 +36,7 @@ Body:
 
 - <Anything intentionally not changed, or still to do.>
 
-## Test plan
+## Check List
 
 - [x] <Check that was run, e.g. `./gradlew :app:compileDebugKotlin` succeeds, `pnpm build` succeeds>
 - [ ] <Check that still needs to be done, e.g. on-device or in-browser verification>

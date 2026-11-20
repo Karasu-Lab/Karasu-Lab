@@ -1,5 +1,9 @@
 {
   "mcpServers": {
+    "karasu-lab-accounts": {
+      "type": "http",
+      "url": "https://mcp.karasu256.com/mcp"
+    },
     "shadcn": {
       "command": "npx",
       "args": ["shadcn@latest", "mcp"]

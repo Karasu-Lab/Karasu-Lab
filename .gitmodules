@@ -106,3 +106,7 @@
 	path = packages/sse
 	url = https://github.com/Karasu-Lab/sse-package.git
 	branch = main
+[submodule "apps/mc-auth.karasu256.com"]
+	path = apps/mc-auth.karasu256.com
+	url = https://github.com/Karasu-Lab/mc-auth.karasu256.com.git
+	branch = main

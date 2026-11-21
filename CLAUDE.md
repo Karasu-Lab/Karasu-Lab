@@ -107,6 +107,8 @@ If a command's output needs to be told apart from another's, run them as separat
 - Do not stop to ask for confirmation on actions already authorized by these rules or by the user's instructions (e.g. recreating a branch off the default branch, opening a non-draft PR) — just proceed.
 - Re-read the root `CLAUDE.md` every 2-3 turns so its rules stay in effect over a long conversation.
 - Prefer responding in Japanese.
+- Never paraphrase, abbreviate, or shorten domain-specific names (e.g. "ルートレポジトリ", app and package names such as `api-auth.karasu256.com`, submodule names). Use the established term exactly as it is written, in both responses and PR text.
+- When a response contains a link (e.g. a pull request URL), always put it on its own line, preceded by a line break, instead of embedding it inline in a sentence.
 - Never start a dev/prod server (`pnpm dev`, `pnpm start`, `next dev`, `next start`, `wrangler dev`, etc.) on your own initiative, including as a way to investigate or verify a bug. Only start one when the user explicitly asks for it.
 - Never open or drive a browser (e.g. Chrome/Chromium automation) to inspect or test the app on your own initiative. Only do so when the user explicitly asks for it. Diagnose and verify changes by reading code, running builds/type checks, and reasoning about behavior instead.
 - Do not make changes beyond what was explicitly requested, even if they look like reasonable cleanup (e.g. deleting or consolidating a file you judge to be redundant, such as a duplicate config). If you notice something out of scope that seems worth fixing, point it out to the user and let them decide, rather than changing it unilaterally.

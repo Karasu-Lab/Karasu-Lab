@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "turbo dev",
     "dev:auth": "pnpm --filter @karasu-lab/docker run run:android && pnpm --parallel --filter api-auth.karasu256.com --filter api.karasu256.com --filter @karasu-lab/cloudflared-config dev",
+    "dev:mc": "turbo run run:mc --filter=@karasu-lab/docker && turbo dev --only --filter=api-auth.karasu256.com --filter=api.karasu256.com --filter=mc-auth.karasu256.com --filter=accounts.karasu256.com --filter=auth.karasu256.com",
+    "dev:volume-purge": "turbo run volume-purge --filter=@karasu-lab/docker",
+    "dev:purge": "pnpm dev:volume-purge && rm -rf apps/*/.wrangler/state",
     "build": "turbo build",
     "deploy": "turbo deploy",
     "deploy:prod": "turbo deploy:prod",

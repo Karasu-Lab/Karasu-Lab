@@ -16,6 +16,9 @@ overrides:
   zod@^4: 4.5.4
   jose@^6: 6.2.5
 
+patchedDependencies:
+  better-auth-email-challenge@0.1.5: apps/api-auth.karasu256.com/patches/better-auth-email-challenge@0.1.5.patch
+
 allowBuilds:
   '@tailwindcss/oxide': true
   sharp: true

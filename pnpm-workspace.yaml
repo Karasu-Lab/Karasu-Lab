@@ -5,13 +5,13 @@ packages:
 overrides:
   '@karasu-lab/api-permissions': 'workspace:*'
   '@karasu-lab/challengetoken': 'workspace:*'
-  '@karasu-lab/db': 'workspace:*'
   '@karasu-lab/flags': 'workspace:*'
   '@karasu-lab/sdk': 'workspace:*'
   '@karasu-lab/sse': 'workspace:*'
   '@karasu-lab/types': 'workspace:*'
   '@karasu-lab/ui': 'workspace:*'
   '@karasu-lab/utils': 'workspace:*'
+  'better-auth@1.7.12>@better-auth/utils': 0.5.1
   jwks-rsa>jose: '^5.10.0'
   zod@^4: 4.5.4
   jose@^6: 6.2.5

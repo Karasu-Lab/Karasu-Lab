@@ -66,10 +66,6 @@
 	path = packages/challengetoken
 	url = https://github.com/Karasu-Lab/challengetoken-package.git
 	branch = main
-[submodule "packages/db"]
-	path = packages/db
-	url = https://github.com/Karasu-Lab/db-package.git
-	branch = main
 [submodule "packages/docker"]
 	path = packages/docker
 	url = https://github.com/Karasu-Lab/docker-package.git

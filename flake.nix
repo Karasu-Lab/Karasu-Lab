@@ -34,7 +34,11 @@
               python3
               git
               gh
+              docker
             ];
+            shellHook = ''
+              export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/docker.sock"
+            '';
             env = {
               npm_config_manage_package_manager_versions = "false";
               PNPM_CONFIG_NPMRC_AUTH_FILE = "${npmrcAuthFile}";

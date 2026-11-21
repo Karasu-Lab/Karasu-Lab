@@ -15,6 +15,12 @@
     "@karasu-lab/docker#run": {
       "cache": false
     },
+    "run:mc": {
+      "cache": false
+    },
+    "volume-purge": {
+      "cache": false
+    },
     "start": {
       "cache": false,
       "persistent": true

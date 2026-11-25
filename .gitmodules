@@ -110,3 +110,6 @@
 	path = apps/mc-auth.karasu256.com
 	url = https://github.com/Karasu-Lab/mc-auth.karasu256.com.git
 	branch = main
+[submodule "apps/karasu-bot"]
+	path = apps/karasu-bot
+	url = https://github.com/Karasu-Lab/karasu-bot.git
